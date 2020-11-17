@@ -5,7 +5,7 @@
 The first thing to do is to clone the repository:
 
 ```sh
-$ git clone hhttps://github.com/androjus/kava_panel.git
+$ git clone https://github.com/androjus/kava_panel.git
 ```
 
 Then install the dependencies:
