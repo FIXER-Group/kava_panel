@@ -5088,6 +5088,13 @@ body {
   font-weight: 600;
   line-height: 1.6;
 }
+.card_swap .card-title {
+  margin: 0;
+  color: #e9edff;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.6;
+}
 .card .card-sub {
   display: block;
   margin: 5px 0 10px 0;

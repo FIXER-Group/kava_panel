@@ -23,5 +23,11 @@ def logout_view(request):
 def stats_update(request):
      results = {'cpu_percent': Server_stat.cpu_percent(),
                 'cpu_per_core': Server_stat.cpu_percent(True),
-                'cpu_name': Server_stat.cpu_name()}
+                'cpu_name': Server_stat.cpu_name(),
+                'ram_percent': Server_stat.ram_percent(),
+                'ram_total': Server_stat.ram_total(),
+                'disk_percent': Server_stat.disk_percent(),
+                'disk_total': Server_stat.disk_total(),
+                'swap_percent': Server_stat.swap_percent(),
+                'swap_total': Server_stat.swap_total()}
      return JsonResponse(results)

@@ -25,10 +25,10 @@ function getCriticColor(percent) {
 		styleText:    true
 	});
 
-Circles.create({
+var ram_circle = Circles.create({
 	id:           'ram',
 	radius:       75,
-	value:        50,
+	value:        0,
 	maxValue:     100,
 	width:        8,
 	text:         function(value){return value + '%';},
@@ -39,10 +39,10 @@ Circles.create({
 	styleWrapper: true,
 	styleText:    true
 })
-Circles.create({
+var disk_circle = Circles.create({
 	id:           'disc',
 	radius:       75,
-	value:        90,
+	value:        0,
 	maxValue:     100,
 	width:        8,
 	text:         function(value){return value + '%';},
