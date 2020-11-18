@@ -26,7 +26,13 @@ SECRET_KEY = 'mr+oxsv942$*kk)9h(@94_r$x*7*&qy!&h5h)8o0cv5nv=ia25'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+<<<<<<< Updated upstream
+=======
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static') 
+
+>>>>>>> Stashed changes
+ALLOWED_HOSTS = ['*']
 
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates/'),
@@ -123,5 +129,3 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = 'panel/'

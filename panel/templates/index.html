@@ -202,44 +202,9 @@
 						</div>
 						<div class="row row-card-no-pd">
 							<div class="col-md-6">
-								<div>
+								<div id="core_stats">
 									<div class="card-body">
-										<div class="progress-card">
-											<div class="d-flex justify-content-between mb-1">
-												<span class="text-muted">Core 1</span>
-												<span class="text-muted fw-bold"> 75%</span>
-											</div>
-											<div class="progress mb-2" style="height: 7px;">
-												<div class="progress-bar bg-success" role="progressbar" style="width: 78%" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100" data-toggle="tooltip" data-placement="top" title="78%"></div>
-											</div>
-										</div>
-										<div class="progress-card">
-											<div class="d-flex justify-content-between mb-1">
-												<span class="text-muted">Core 2</span>
-												<span class="text-muted fw-bold"> 65%</span>
-											</div>
-											<div class="progress mb-2" style="height: 7px;">
-												<div class="progress-bar bg-info" role="progressbar" style="width: 65%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" data-toggle="tooltip" data-placement="top" title="65%"></div>
-											</div>
-										</div>
-										<div class="progress-card">
-											<div class="d-flex justify-content-between mb-1">
-												<span class="text-muted">Core 3</span>
-												<span class="text-muted fw-bold"> 70%</span>
-											</div>
-											<div class="progress mb-2" style="height: 7px;">
-												<div class="progress-bar bg-primary" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" data-toggle="tooltip" data-placement="top" title="70%"></div>
-											</div>
-										</div>
-										<div class="progress-card">
-											<div class="d-flex justify-content-between mb-1">
-												<span class="text-muted">Core 4</span>
-												<span class="text-muted fw-bold"> 60%</span>
-											</div>
-											<div class="progress mb-2" style="height: 7px;">
-												<div class="progress-bar bg-warning" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" data-toggle="tooltip" data-placement="top" title="60%"></div>
-											</div>
-										</div>
+										<h3>Loading...</h1>
 									</div>
 								</div>
 							</div>
@@ -282,4 +247,32 @@
 <script src="{% static 'assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js' %}"></script>
 <script src="{% static 'assets/js/ready.min.js' %}"></script>
 <script src="{% static 'assets/js/demo.js' %}"></script>
+<script>
+$( document ).ready(function() {
+	$.getJSON("{% url 'panel:stats_update' %}",
+                    function (data) {
+						var json = data['cpu_per_core'];
+						$('#core_stats').html("");
+						$('#core_stats').append('<div class="card-body">');
+                        for (var i = 0; i < json.length; i++) {
+							var core_id = i+1;
+                            $('#core_stats').append('<div class="progress-card"><div class="d-flex justify-content-between mb-1"><span class="text-muted">Core ' + core_id + '</span><span class="text-muted fw-bold" id="core_id_label'+i+'">'+ json[i].toFixed(0) + '%</span></div><div class="progress mb-2" style="height: 7px;"><div class="progress-bar bg-success" id="core_id'+i+'" role="progressbar" style="width:'+json[i].toFixed(0)+'%" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100" data-toggle="tooltip" data-placement="top"></div></div></div>');
+						}
+						$('#core_stats').append('</div>');
+					});
+setInterval(function() {
+	$.getJSON("{% url 'panel:stats_update' %}",
+                    function (data) {
+						var json = data['cpu_per_core'];
+                        for (var i = 0; i < json.length; i++) {
+							$('#core_id'+i).animate({width: json[i].toFixed(0)+"%"},100);
+							$('#core_id_label'+i).html(json[i].toFixed(0)+"%")
+
+                        }
+					});
+}, 5000)
+
+});
+
+</script>
 </html>
