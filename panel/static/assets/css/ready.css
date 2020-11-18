@@ -54,6 +54,7 @@ body, h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, p, .navbar, .brand, 
 body {
   font-size: 14px;
   color: #575962;
+  background: #13151b;
 }
 
 h1, .h1 {

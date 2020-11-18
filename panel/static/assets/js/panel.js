@@ -1,18 +1,30 @@
+function getCriticColor(percent) {
+	if (percent<50){
+	  return "#28a745";
+	}
+	else if(percent>=50 && percent<90){
+		return "#fd7e14";
+	}
+    else{
+		return "#dc3545";
+	}
+}
 
-Circles.create({
-	id:           'cpu',
-	radius:       75,
-	value:        80,
-	maxValue:     100,
-	width:        8,
-	text:         function(value){return value + '%';},
-	colors:       ['#eee', '#1D62F0'],
-	duration:     400,
-	wrpClass:     'circles-wrp',
-	textClass:    'circles-text',
-	styleWrapper: true,
-	styleText:    true
-})
+	var cpu_circle = Circles.create({
+		id:           'cpu',
+		radius:       75,
+		value:        0,
+		maxValue:     100,
+		width:        8,
+		text:         function(value){return value + '%';},
+		colors:       ['#eee', '#1D62F0'],
+		duration:     400,
+		wrpClass:     'circles-wrp',
+		textClass:    'circles-text',
+		styleWrapper: true,
+		styleText:    true
+	});
+
 Circles.create({
 	id:           'ram',
 	radius:       75,

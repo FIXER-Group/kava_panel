@@ -22,5 +22,6 @@ def logout_view(request):
 
 def stats_update(request):
      results = {'cpu_percent': Server_stat.cpu_percent(),
-                'cpu_per_core': Server_stat.cpu_percent(True)}
+                'cpu_per_core': Server_stat.cpu_percent(True),
+                'cpu_name': Server_stat.cpu_name()}
      return JsonResponse(results)
