@@ -1,0 +1,159 @@
+{% extends "index.html" %}
+{% block title %}
+    Dashboard
+{% endblock %}
+{% block content %}
+    <div class="content">
+        <div class="container-fluid">
+            <h4 class="page-title">Dashboard</h4>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card card-stats card-danger">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-5">
+                                    <div class="icon-big text-center">
+                                        <i class="las la-power-off"></i>
+                                    </div>
+                                </div>
+                                <div class="col-7 d-flex align-items-center">
+                                    <div class="numbers">
+                                        <p class="card-title">Restart</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title"><i class="las la-microchip"></i> CPU</h4>
+                            <p class="card-category" id="cpu_name">Loading...</p>
+                        </div>
+                        <div class="card-body">
+                            <div id="cpu" class="chart-circle mt-4 mb-3"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title"><i class="las la-server"></i> RAM</h4>
+                            <p class="card-category" id="ram_total">Loading...</p>
+                        </div>
+                        <div class="card-body">
+                            <div id="ram" class="chart-circle mt-4 mb-3"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title"><i class="las la-hdd"></i> DISK</h4>
+                            <p class="card-category" id="disk_total">Loading...</p>
+                        </div>
+                        <div class="card-body">
+                            <div id="disc" class="chart-circle mt-4 mb-3"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row row-card-no-pd">
+                <div class="col-md-6">
+                    <div  class="card_swap card-header">
+                        <h4 class="card-title"><i class="las la-microchip"></i> CPU CORES</h4>
+                        <div id="core_stats">
+                            <div class="card-body">
+                                <h3>Loading...</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card_swap">
+                        <div class="card-header">
+                            <h4 class="card-title"><i class="las la-hdd"></i> SWAP</h4>
+                            <p class="card-category" id="swap_total">Loading...</p>
+                            <div class="progress-card">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span id="swap_label_percent" class="text-muted fw-bold"> Loading...</span>
+                                </div>
+                                <div class="progress mb-2" style="height: 7px;">
+                                    <div class="progress-bar" id="swap_bar" role="progressbar" style="width: 0%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" data-toggle="tooltip" data-placement="top" title="60%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascript %}
+    <script>
+        $( document ).ready(function() {
+            $.getJSON("{% url 'panel:stats_update' %}",
+                function (data) {
+                    var json = data['cpu_per_core'];
+                    var cpu_name = data['cpu_name'];
+                    $('#cpu_name').html(cpu_name);
+                    var ram_total = data['ram_total'];
+                    var ram_usage = data['ram_usage'];
+                    $('#ram_total').html(ram_usage + " / " + ram_total);
+                    var disk_total = data['disk_total'];
+                    var disk_usage = data['disk_usage'];
+                    $('#disk_total').html(disk_usage+" / "+disk_total)
+                    var swap_total = data['swap_total'];
+                    $('#swap_total').html(swap_total);
+                    var cpu_percent = data['cpu_percent'];
+                    cpu_circle.update(cpu_percent.toFixed(0));
+                    cpu_circle.updateColors(['#eee', getCriticColor(cpu_percent.toFixed(0))]);
+                    var ram_percent = data['ram_percent'];
+                    ram_circle.update(ram_percent.toFixed(0));
+                    ram_circle.updateColors(['#eee', getCriticColor(ram_percent.toFixed(0))]);
+                    var disk_percent = data['disk_percent'];
+                    disk_circle.update(disk_percent.toFixed(0));
+                    disk_circle.updateColors(['#eee', getCriticColor(disk_percent.toFixed(0))]);
+                    var swap_percent = data['swap_percent'];
+                    $('#swap_bar').css("background-color", getCriticColor(swap_percent.toFixed(0)));
+                    $('#swap_bar').animate({width: swap_percent.toFixed(0)+"%"},100);
+                    $('#swap_label_percent').html(swap_percent.toFixed(0)+"%")
+                    $('#core_stats').html("");
+                    $('#core_stats').append('<div class="card-body">');
+                    for (var i = 0; i < json.length; i++) {
+                        var core_id = i+1;
+                        $('#core_stats').append('<div class="progress-card"><div class="d-flex justify-content-between mb-1"><span class="text-muted">Core ' + core_id + '</span><span class="text-muted fw-bold" id="core_id_label'+i+'">'+ json[i].toFixed(0) + '%</span></div><div class="progress mb-2" style="height: 7px;"><div class="progress-bar" id="core_id'+i+'" role="progressbar" style="width:'+json[i].toFixed(0)+'%; background-color: '+getCriticColor(json[i].toFixed(0))+'" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100" data-toggle="tooltip" data-placement="top"></div></div></div>');
+                    }
+                    $('#core_stats').append('</div>');
+                });
+            setInterval(function() {
+                $.getJSON("{% url 'panel:stats_update' %}",
+                    function (data) {
+                        var json = data['cpu_per_core'];
+                        var cpu_percent = data['cpu_percent'];
+                        cpu_circle.update(cpu_percent.toFixed(0));
+                        cpu_circle.updateColors(['#eee', getCriticColor(cpu_percent.toFixed(0))]);
+                        var ram_percent = data['ram_percent'];
+                        ram_circle.update(ram_percent.toFixed(0));
+                        ram_circle.updateColors(['#eee', getCriticColor(ram_percent.toFixed(0))]);
+                        var disk_percent = data['disk_percent'];
+                        disk_circle.update(disk_percent.toFixed(0));
+                        disk_circle.updateColors(['#eee', getCriticColor(disk_percent.toFixed(0))]);
+                        for (var i = 0; i < json.length; i++) {
+                            $('#core_id'+i).css("background-color", getCriticColor(json[i].toFixed(0)));
+                            $('#core_id'+i).animate({width: json[i].toFixed(0)+"%"},100);
+                            $('#core_id_label'+i).html(json[i].toFixed(0)+"%")
+
+                        }
+                        var swap_percent = data['swap_percent'];
+                        $('#swap_bar').css("background-color", getCriticColor(swap_percent.toFixed(0)));
+                        $('#swap_bar').animate({width: swap_percent.toFixed(0)+"%"},100);
+                        $('#swap_label_percent').html(swap_percent.toFixed(0)+"%")
+                    });
+            }, 5000)
+        });
+    </script>
+{% endblock %}

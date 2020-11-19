@@ -5,20 +5,20 @@ from django.http import JsonResponse
 from .models import Server_stat
 
 
-
-
-
 @login_required(login_url='/')
 
 def index(request):
     context ={}
     cpu_cores = Server_stat.objects.all()
     context['cpu_cores'] = Server_stat.cpu_percent(True)
-    return render(request, 'index.html', context )
+    return render(request, 'dashboard.html', context )
 
 def logout_view(request):
     logout(request)
     return redirect('accounts:index')
+
+def about(request):
+    return render(request, 'about.html')
 
 def stats_update(request):
      results = {'cpu_percent': Server_stat.cpu_percent(),
