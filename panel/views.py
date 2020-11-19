@@ -26,8 +26,10 @@ def stats_update(request):
                 'cpu_name': Server_stat.cpu_name(),
                 'ram_percent': Server_stat.ram_percent(),
                 'ram_total': Server_stat.ram_total(),
+                'ram_usage': Server_stat.ram_used(),
                 'disk_percent': Server_stat.disk_percent(),
                 'disk_total': Server_stat.disk_total(),
+                'disk_usage': Server_stat.disk_usage(),
                 'swap_percent': Server_stat.swap_percent(),
                 'swap_total': Server_stat.swap_total()}
      return JsonResponse(results)

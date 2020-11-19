@@ -14,6 +14,15 @@ class Server_stat(models.Model):
     
     def ram_percent():
         return psutil.virtual_memory().percent
+    def ram_used():
+        size_bytes = psutil.virtual_memory().used
+        if size_bytes == 0:
+            return "0B"
+        size_name = ("B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
+        i = int(math.floor(math.log(size_bytes, 1024)))
+        p = math.pow(1024, i)
+        s = round(size_bytes / p, 2)
+        return "%s %s" % (s, size_name[i])
 
     def ram_total():
         size_bytes = psutil.virtual_memory().total
@@ -30,6 +39,15 @@ class Server_stat(models.Model):
 
     def disk_total():
         size_bytes = psutil.disk_usage('/').total
+        if size_bytes == 0:
+            return "0B"
+        size_name = ("B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
+        i = int(math.floor(math.log(size_bytes, 1024)))
+        p = math.pow(1024, i)
+        s = round(size_bytes / p, 2)
+        return "%s %s" % (s, size_name[i])
+    def disk_usage():
+        size_bytes = psutil.disk_usage('/').used
         if size_bytes == 0:
             return "0B"
         size_name = ("B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")

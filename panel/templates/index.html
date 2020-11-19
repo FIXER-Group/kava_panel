@@ -257,9 +257,11 @@ $( document ).ready(function() {
 						var cpu_name = data['cpu_name'];
 						$('#cpu_name').html(cpu_name);
 						var ram_total = data['ram_total'];
-						$('#ram_total').html(ram_total);
+                        var ram_usage = data['ram_usage'];
+						$('#ram_total').html(ram_usage + " / " + ram_total);
 						var disk_total = data['disk_total'];
-						$('#disk_total').html(disk_total);
+                        var disk_usage = data['disk_usage'];
+                        $('#disk_total').html(disk_usage+" / "+disk_total)
 						var swap_total = data['swap_total'];
 						$('#swap_total').html(swap_total);
 						var cpu_percent = data['cpu_percent'];
