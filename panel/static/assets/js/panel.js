@@ -64,7 +64,7 @@ $.notify({
 		from: "top",
 		align: "right"
 	},
-	time: 900000000,
+	time: 999999999,
 });
 
 // monthlyChart

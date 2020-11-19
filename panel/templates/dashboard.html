@@ -25,6 +25,25 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-md-3">
+                    <div class="card card-stats">
+                        <div class="card-body ">
+                            <div class="row">
+                                <div class="col-5">
+                                    <div class="icon-big text-center">
+                                        <i class="la la-clock text-success"></i>
+                                    </div>
+                                </div>
+                                <div class="col-7 d-flex align-items-center">
+                                    <div class="numbers">
+                                        <p class="card-category">Uptime</p>
+                                        <h4 class="card-title" id="uptime">Loading...</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="row">
                 <div class="col-md-4">
@@ -108,6 +127,8 @@
                     $('#disk_total').html(disk_usage+" / "+disk_total)
                     var swap_total = data['swap_total'];
                     $('#swap_total').html(swap_total);
+                    var uptime = data['uptime'];
+                    $('#uptime').html(uptime.toFixed(0)+" days");
                     var cpu_percent = data['cpu_percent'];
                     cpu_circle.update(cpu_percent.toFixed(0));
                     cpu_circle.updateColors(['#eee', getCriticColor(cpu_percent.toFixed(0))]);

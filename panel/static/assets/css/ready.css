@@ -6058,6 +6058,16 @@ body {
   border-radius: 50%;
 }
 
+.alert .close {
+  background: rgba(255, 255, 255, 0.8);
+  width: 25px;
+  height: 25px;
+  line-height: 25px;
+  top: auto !important;
+  border-radius: 50%;
+}
+
+
 .alert-primary {
   background-color: #1D62F0;
 }

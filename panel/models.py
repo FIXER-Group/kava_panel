@@ -2,6 +2,7 @@ from django.db import models
 import math
 import psutil
 import cpuinfo
+import time
 
 
 class Server_stat(models.Model):
@@ -68,6 +69,9 @@ class Server_stat(models.Model):
         p = math.pow(1024, i)
         s = round(size_bytes / p, 2)
         return "%s %s" % (s, size_name[i])
+
+    def uptime_days():
+        return (time.time() - psutil.boot_time())//(60*60*24)
 
 
 

@@ -31,5 +31,6 @@ def stats_update(request):
                 'disk_total': Server_stat.disk_total(),
                 'disk_usage': Server_stat.disk_usage(),
                 'swap_percent': Server_stat.swap_percent(),
-                'swap_total': Server_stat.swap_total()}
+                'swap_total': Server_stat.swap_total(),
+                'uptime': Server_stat.uptime_days()}
      return JsonResponse(results)
