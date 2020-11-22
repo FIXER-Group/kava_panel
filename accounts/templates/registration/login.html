@@ -5,7 +5,7 @@
 {% block form %}
 <div id="formContent">
   <div class="fadeIn first">
-<h1>Panel</h1>
+<h1>Kava Panel</h1>
   </div>
   <form method="POST" action="{% url 'accounts:index' %}"> 
     {% for field in form %}
@@ -35,13 +35,14 @@
 </script>>
 {% endif %}
 
-{% if logout_info %}
+{% for message in messages %}
+{% if 'logout' in message.tags %}
 <script>
 	$.notify({
-		icon: 'las la-exclamation-triangle',
-		message: 'Wylogowano'
+		icon: 'las la-check-circle',
+		message: 'You have successfully logged out'
 	},{
-		type: 'danger',
+		type: 'success',
 		placement: {
 			from: "top",
 			align: "right"
@@ -50,5 +51,6 @@
 	});
 </script>>
 {% endif %}
+{% endfor %}
 
 {% endblock %}

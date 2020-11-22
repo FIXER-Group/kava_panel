@@ -3,22 +3,23 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from .models import Server_stat
+from django.contrib import messages
+
 
 
 @login_required(login_url='/')
 
 def index(request):
-    context ={}
-    cpu_cores = Server_stat.objects.all()
-    context['cpu_cores'] = Server_stat.cpu_percent(True)
-    return render(request, 'dashboard.html', context )
+    return render(request, 'dashboard.html')
 
 def logout_view(request):
     logout(request)
+    messages.info(request, 'Logout_message', extra_tags='logout')
     return redirect('accounts:index')
 
-def about(request):
-    return render(request, 'about.html')
+@login_required(login_url='/')
+def process(request):
+    return render(request, 'process.html')
 
 def stats_update(request):
      results = {'cpu_percent': Server_stat.cpu_percent(),

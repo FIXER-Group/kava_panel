@@ -112,6 +112,26 @@
     </div>
 {% endblock %}
 {% block javascript %}
+{% for message in messages %}
+{% if 'login' in message.tags %}
+<script>
+    $.notify({
+	icon: 'las la-check-circle',
+	title: 'You have successfully logged in.',
+	message: ''
+    },{
+	type: 'success',
+	placement: {
+		from: "top",
+		align: "right"
+	},
+	time: 3000,
+});
+
+</script>
+{% endif %}
+{% endfor %}
+
     <script>
         $( document ).ready(function() {
             $.getJSON("{% url 'panel:stats_update' %}",

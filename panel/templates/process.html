@@ -1,0 +1,56 @@
+{% extends "index.html" %}
+{% block title %}
+    Processes
+{% endblock %}
+{% block content %}
+<div class="content">
+    <div class="container-fluid">
+        <h4 class="page-title">Processes</h4>
+        <div class="row table-striped">
+            <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">PID</th>
+                                <th scope="col">User</th>
+                                <th scope="col">CPU%</th>
+                                <th scope="col">MEM%</th>
+                                <th scope="col">Command</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>3543</td>
+                                <td>Mark</td>
+                                <td>1.5%</td>
+                                <td>10.5%</td>
+                                <td>/usr/bin/ python3</td>
+                                <td class="text-danger"><i class="las la-times"></i></td>
+                            </tr>
+                            <tr>
+                                <td>253534</td>
+                                <td>Jacob</td>
+                                <td>25.1%</td>
+                                <td>1.5%</td>
+                                <td>/usr/bin/ python3</td>
+                                <td class="text-danger"><i class="las la-times"></i></td>
+                            </tr>
+                            <tr>
+                                <td>534543</td>
+                                <td>Bird</td>
+                                <td>1.5%</td>
+                                <td>5.5%</td>
+                                <td>/usr/bin/ python3</td>
+                                <td class="text-danger"><i class="las la-times"></i></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -54,30 +54,6 @@ var disk_circle = Circles.create({
 	styleText:    true
 })
 
-$.notify({
-	icon: 'las la-check-circle',
-	title: 'You have successfully logged in.',
-	message: ''
-},{
-	type: 'success',
-	placement: {
-		from: "top",
-		align: "right"
-	},
-	time: 999999999,
-});
-
-// monthlyChart
-
-Chartist.Pie('#monthlyChart', {
-	labels: ['50%', '20%', '30%'],
-	series: [50, 20, 30]
-}, {
-	plugins: [
-	Chartist.plugins.tooltip()
-	]
-});
-
 // trafficChart
 var chart = new Chartist.Line('#trafficChart', {
 	labels: [1, 2, 3, 4, 5, 6, 7],

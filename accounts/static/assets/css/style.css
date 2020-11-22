@@ -46,6 +46,8 @@ input[type=button], input[type=submit], input[type=reset]  {
   text-transform: uppercase;
   font-size: 13px;
   margin: 10px;
+  border: none;
+  outline:none;
   -webkit-transition: all 0.3s ease-in-out;
   -moz-transition: all 0.3s ease-in-out;
   -ms-transition: all 0.3s ease-in-out;
@@ -115,7 +117,7 @@ input[type=password] {
 input[type=password]:focus {
   background-color: #0e1015;
   border-bottom: 2px solid #44d629;
-  outline: none !important;
+  outline:none;
 }
 
 input[type=password]:placeholder {
@@ -246,4 +248,22 @@ input[type=password]:placeholder {
 
 .alert-danger {
   background-color: #ff646d;
+}
+
+textarea:hover, 
+input:hover, 
+textarea:active, 
+input:active, 
+textarea:focus, 
+input:focus,
+button:focus,
+button:active,
+button:hover,
+label:focus,
+.btn:active,
+.btn.active
+{
+    outline:0px !important;
+    -webkit-appearance:none;
+    box-shadow: none !important;
 }

@@ -5541,7 +5541,12 @@ body {
 
 /*     Table    */
 .table {
-  color: #555 !important;
+  color: #fff !important;
+  border-collapse:separate; 
+  border-spacing: 0 1em;
+}
+.table thead > tr{
+  background-color: transparent !important;
 }
 .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
   vertical-align: middle;
@@ -5553,13 +5558,17 @@ body {
   padding: 8px;
 }
 .table thead th {
-  color: #554;
-  border-bottom-width: 2px;
+  color: #fff;
 }
 .table td, .table th {
   font-size: 14px;
-  border-color: #ebedf2 !important;
   padding: 0.75rem !important;
+}
+.table>tbody>tr:nth-child(odd)>td, 
+.table>tbody>tr:nth-child(odd)>th,
+.table>tbody>tr:nth-child(even)>td, 
+.table>tbody>tr:nth-child(even)>th {
+  background-color: #0f1015;
 }
 
 /* table full-width */
