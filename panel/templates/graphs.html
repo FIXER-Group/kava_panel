@@ -3,24 +3,38 @@
     Graphs
 {% endblock %}
 {% block content %}
-<div class="content">
-    <div class="container-fluid">
-        <h4 class="page-title">Graphs</h4>
-                <h1>Some Line Charts loaded in Ajax!</h1>
-
-        <canvas id="myChart" width="500" height="400"></canvas>
+    <div class="content">
+        <div class="container-fluid">
+            <h4 class="page-title">Graphs</h4>
+            <div class="row">
+                <div class="col">
+                    <h5>Chart 1</h5>
+                    <canvas id="myChart" width="500" height="400"></canvas>
+                </div>
+                <div class="col">
+                     <h5>Chart 1</h5>
+                    <canvas id="myChart1" width="500" height="400"></canvas>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
 {% endblock %}
 {% block javascript %}
-  {% load static %}
-  <script type="text/javascript" src="{% static 'assets/js/core/Chart.min.js' %}"></script>
-        <script type="text/javascript">
-            $.getJSON("{% url 'panel:chartJSON' %}", function(data) {
-                var ctx = $("#myChart").get(0).getContext("2d");
-                new Chart(ctx, {
-                    type: 'line', data: data
-                });
+    {% load static %}
+    <script type="text/javascript" src="{% static 'assets/js/core/Chart.min.js' %}"></script>
+    <script type="text/javascript">
+        $.getJSON("{% url 'panel:chartJSON' %}", function(data) {
+            var ctx = $("#myChart").get(0).getContext("2d");
+            new Chart(ctx, {
+                type: 'line', data: data
             });
-        </script>
+        });
+    </script>    <script type="text/javascript">
+        $.getJSON("{% url 'panel:chartJSON' %}", function(data) {
+            var ctx = $("#myChart1").get(0).getContext("2d");
+            new Chart(ctx, {
+                type: 'line', data: data
+            });
+        });
+    </script>
 {% endblock %}

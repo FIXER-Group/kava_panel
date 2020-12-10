@@ -83,7 +83,7 @@ WSGI_APPLICATION = 'kava.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',           #'django.db.backends.sqlite3',
-        'NAME': 'logs',              # DB name
+        'NAME': 'kava',              # DB name
     }
 }
 
