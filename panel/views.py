@@ -4,8 +4,9 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from .models import Server_stat
 from django.contrib import messages
-
-
+import socket
+import psutil
+import platform
 
 @login_required(login_url='/')
 
@@ -20,6 +21,19 @@ def logout_view(request):
 @login_required(login_url='/')
 def process(request):
     return render(request, 'process.html')
+
+
+@login_required(login_url='/')
+def system(request):
+    return render(request, 'system.html',
+                  {'Name': platform.system(),
+                  'Release': platform.release(),
+                  'Version': platform.version(),
+                  'Architecture': platform.machine(),
+                  'Hostname': socket.gethostname(),
+                  'IpAdress': socket.gethostbyname(socket.gethostname()),
+                  'Processor': platform.processor()}
+                  )
 
 def stats_update(request):
      results = {'cpu_percent': Server_stat.cpu_percent(),

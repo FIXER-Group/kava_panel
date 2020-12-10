@@ -16,7 +16,7 @@
     <div class="main-header">
         <div class="logo-header">
             <a href="(% url 'index' %}" class="logo">
-               Kava Panel
+                Kava Panel
             </a>
             <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -57,6 +57,12 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
+                </li>
+                <li class="nav-item {% if request.resolver_match.url_name == 'system' %}active{% endif %}">
+                    <a href="{% url 'panel:system' %}">
+                        <i class="las la-info"></i>
+                        <p>System info</p>
+                    </a>
                 <li class="nav-item {% if request.resolver_match.url_name == 'process' %}active{% endif %}">
                     <a href="{% url 'panel:process' %}">
                         <i class="la la-cogs"></i>

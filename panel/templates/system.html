@@ -1,0 +1,51 @@
+{% extends "index.html" %}
+{% block title %}
+    System Info
+{% endblock %}
+{% block content %}
+    <div class="content">
+        <div class="container-fluid">
+            <h4 class="page-title">System info</h4>
+            <div class="row table-striped">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <table class="table table-striped mt-2">
+                                <tbody>
+                                <tr>
+                                    <td>Name</td>
+                                    <td id="system_name">{{ Name }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Release</td>
+                                    <td id="system_release"> {{ Release }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Version</td>
+                                    <td id="system_version"> {{ Version }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Hostname</td>
+                                    <td id="system_hostname"> {{ Hostname }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Architecture</td>
+                                    <td id="system_architecture"> {{ Architecture }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Ip Adress</td>
+                                    <td id="system_ipadress">{{ IpAdress }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Processor</td>
+                                    <td id="system_processor"> {{  Processor }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
