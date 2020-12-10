@@ -70,6 +70,12 @@
                         <span class="badge badge-count">14</span>
                     </a>
                 </li>
+                <li class="nav-item {% if request.resolver_match.url_name == 'graphs' %}active{% endif %}">
+                    <a href="{% url 'panel:graphs' %}">
+                        <i class="las la-chart-bar"></i>
+                        <p>Graphs</p>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

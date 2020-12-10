@@ -4,8 +4,9 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from .models import Server_stat
 from django.contrib import messages
+from django.views.generic import TemplateView
+from chartjs.views.lines import BaseLineChartView
 import socket
-import psutil
 import platform
 
 @login_required(login_url='/')
@@ -22,6 +23,10 @@ def logout_view(request):
 def process(request):
     return render(request, 'process.html')
 
+
+@login_required(login_url='/')
+def graphs(request):
+    return render(request, 'graphs.html')
 
 @login_required(login_url='/')
 def system(request):
@@ -49,3 +54,23 @@ def stats_update(request):
                 'swap_total': Server_stat.swap_total(),
                 'uptime': Server_stat.uptime_days()}
      return JsonResponse(results)
+
+
+class LineChartJSONView(BaseLineChartView):
+    def get_labels(self):
+        """Return 7 labels for the x-axis."""
+        return ["January", "February", "March", "April", "May", "June", "July"]
+
+    def get_providers(self):
+        """Return names of datasets."""
+        return ["Central", "Eastside", "Westside"]
+
+    def get_data(self):
+        """Return 3 datasets to plot."""
+
+        return [[75, 44, 92, 11, 44, 95, 35],
+                [41, 92, 18, 3, 73, 87, 92],
+                [87, 21, 94, 3, 90, 13, 65]]
+
+
+line_chart_json = LineChartJSONView.as_view()
