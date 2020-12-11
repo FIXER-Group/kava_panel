@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from .models import Server_stat
+from .models import Server_stat, CPULogs
 from django.contrib import messages
 from django.views.generic import TemplateView
 from chartjs.views.lines import BaseLineChartView
@@ -13,6 +13,8 @@ import requests
 @login_required(login_url='/')
 
 def index(request):
+    log = CPULogs()
+    log.save()
     return render(request, 'dashboard.html')
 
 def logout_view(request):

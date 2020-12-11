@@ -3,6 +3,9 @@ import math
 import psutil
 import cpuinfo
 import time
+from datetime import datetime
+
+
 
 
 
@@ -75,6 +78,8 @@ class Server_stat(models.Model):
         return (time.time() - psutil.boot_time())//(60*60*24)
 
 
-
+class CPULogs(models.Model):
+    date = models.CharField(max_length=30, default=datetime.today().strftime("%d %b %Y %H:%M:%S"))
+    usage = models.FloatField(default=Server_stat.cpu_percent)
 
 
