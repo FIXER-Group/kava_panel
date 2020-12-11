@@ -4,6 +4,7 @@ import psutil
 import cpuinfo
 import time
 from datetime import datetime
+import asyncio
 
 
 
@@ -79,7 +80,12 @@ class Server_stat(models.Model):
 
 
 class CPULogs(models.Model):
+    created = models.DateField(auto_now_add=True)
     date = models.CharField(max_length=30, default=datetime.today().strftime("%d %b %Y %H:%M:%S"))
     usage = models.FloatField(default=Server_stat.cpu_percent)
 
 
+class RAMLogs(models.Model):
+    created = models.DateField(auto_now_add=True)
+    date = models.CharField(max_length=30, default=datetime.today().strftime("%d %b %Y %H:%M:%S"))
+    usage = models.FloatField(default=Server_stat.ram_percent)

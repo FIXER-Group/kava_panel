@@ -88,6 +88,7 @@ DATABASES = {
 }
 
 
+
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
@@ -113,7 +114,6 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
-DATETIME_FORMAT = '%d-%m-%Y %H:%M:%S' 
 
 USE_I18N = True
 

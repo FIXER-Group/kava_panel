@@ -9,6 +9,7 @@ from chartjs.views.lines import BaseLineChartView
 import socket
 import platform
 import requests
+import datetime
 
 @login_required(login_url='/')
 
@@ -59,10 +60,14 @@ def stats_update(request):
      return JsonResponse(results)
 
 
-class LineChartJSONView(BaseLineChartView):
+class LineChartCpu(BaseLineChartView):
+    now = datetime.datetime.now()
+    earlier = now - datetime.timedelta(hours=24)
+    results = CPULogs.objects.filter(created__range=(earlier,now))
+
     def get_labels(self):
         """Return 7 labels for the x-axis."""
-        return ["January", "February", "March", "April", "May", "June", "July"]
+        return list(self.results.values_list('date', flat=True))
 
     def get_providers(self):
         """Return names of datasets."""
@@ -70,5 +75,5 @@ class LineChartJSONView(BaseLineChartView):
 
     def get_data(self):
         """Return 3 datasets to plot."""
-        return [[75, 44, 92, 11, 44, 95, 35]]
+        return [list(self.results.values_list('usage', flat=True))]
     

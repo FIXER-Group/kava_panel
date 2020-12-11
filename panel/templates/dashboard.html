@@ -176,7 +176,7 @@
 
     <script>
         $( document ).ready(function() {
-            $.getJSON("{% url 'panel:chartJSON' %}", function(data) {
+            $.getJSON("{% url 'panel:chartcpu' %}", function(data) {
         var cpuc = $("#cpuChart").get(0).getContext("2d");
         new Chart(cpuc, {
             type: 'line', 
@@ -193,11 +193,14 @@
             borderWidth: 2,
             pointBorderColor: "#fff",
             pointBackgroundColor: "rgba(89, 208, 93, 0.1)",
+            lineTension: 0,
           }
         ]
         },
         });
-        var ramc = $("#ramChart").get(0).getContext("2d");
+    });
+    $.getJSON("{% url 'panel:chartcpu' %}", function(data) {
+    var ramc = $("#ramChart").get(0).getContext("2d");
         new Chart(ramc, {
             type: 'line', 
             data: {
@@ -213,6 +216,7 @@
             borderWidth: 2,
             pointBorderColor: "#fff",
             pointBackgroundColor: "rgba(89, 208, 93, 0.1)",
+            lineTension: 0
           }
         ]
         },
