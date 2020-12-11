@@ -7,7 +7,7 @@
         <div class="container-fluid">
             <h4 class="page-title">Dashboard</h4>
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-3 cursor-pointer" data-toggle="modal" data-target="#restart">
                     <div class="card card-stats card-danger">
                         <div class="card-body">
                             <div class="row">
@@ -18,7 +18,7 @@
                                 </div>
                                 <div class="col-7 d-flex align-items-center">
                                     <div class="numbers">
-                                        <p class="card-title">Restart</p>
+                                        <p class="card-title">Reboot</p>
                                     </div>
                                 </div>
                             </div>
@@ -108,8 +108,48 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title"><i class="las la-microchip"></i> Last 24 hours of CPU usage</h4>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="cpuChart" width="500" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title"><i class="las la-server"></i> Last 24 hours of RAM usage</h4>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="ramChart" width="500" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
+    <div class="modal fade" id="restart" tabindex="-1" role="dialog" aria-labelledby="reboot" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle"><i class="las la-power-off"></i> Reboot</h5>
+            </div>
+            <div class="modal-body">
+              <p>Are you sure you want to reboot the server?</p>
+              <p>(The page will freeze and may need to be refreshed)</p>        
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-danger"><i class="las la-power-off"></i> Reboot</button>
+            </div>
+          </div>
+        </div>
+      </div>
 {% endblock %}
 {% block javascript %}
 {% for message in messages %}
@@ -130,10 +170,55 @@
 
 </script>
 {% endif %}
-{% endfor %}
+{% endfor %}    
+{% load static %}
+<script type="text/javascript" src="{% static 'assets/js/core/Chart.min.js' %}"></script>
 
     <script>
         $( document ).ready(function() {
+            $.getJSON("{% url 'panel:chartJSON' %}", function(data) {
+        var cpuc = $("#cpuChart").get(0).getContext("2d");
+        new Chart(cpuc, {
+            type: 'line', 
+            data: {
+        labels: data["labels"],
+        datasets: [
+          {
+            label: "Usage",
+            data: data["datasets"][0]["data"],
+            backgroundColor: 'rgba(89, 208, 93, 0.2)',
+            borderColor: [
+              '#28a745',
+            ],
+            borderWidth: 2,
+            pointBorderColor: "#fff",
+            pointBackgroundColor: "rgba(89, 208, 93, 0.1)",
+          }
+        ]
+        },
+        });
+        var ramc = $("#ramChart").get(0).getContext("2d");
+        new Chart(ramc, {
+            type: 'line', 
+            data: {
+        labels: data["labels"],
+        datasets: [
+          {
+            label: "Usage",
+            data: data["datasets"][0]["data"],
+            backgroundColor: 'rgba(89, 208, 93, 0.2)',
+            borderColor: [
+              '#28a745',
+            ],
+            borderWidth: 2,
+            pointBorderColor: "#fff",
+            pointBackgroundColor: "rgba(89, 208, 93, 0.1)",
+          }
+        ]
+        },
+            
+        });
+    });
             $.getJSON("{% url 'panel:stats_update' %}",
                 function (data) {
                     var json = data['cpu_per_core'];
@@ -148,7 +233,7 @@
                     var swap_total = data['swap_total'];
                     $('#swap_total').html(swap_total);
                     var uptime = data['uptime'];
-                    $('#uptime').html(uptime.toFixed(0)+" days");
+                    $('#uptime').html((uptime.toFixed(0)>1) ? (uptime.toFixed(0) + " days") : (uptime.toFixed(0) +" day"));
                     var cpu_percent = data['cpu_percent'];
                     cpu_circle.update(cpu_percent.toFixed(0));
                     cpu_circle.updateColors(['#eee', getCriticColor(cpu_percent.toFixed(0))]);

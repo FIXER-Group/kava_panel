@@ -5,6 +5,7 @@ import cpuinfo
 import time
 
 
+
 class Server_stat(models.Model):
 
     def cpu_percent(percore=False):
@@ -72,6 +73,8 @@ class Server_stat(models.Model):
 
     def uptime_days():
         return (time.time() - psutil.boot_time())//(60*60*24)
+
+
 
 
 

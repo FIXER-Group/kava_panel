@@ -8,6 +8,7 @@ from django.views.generic import TemplateView
 from chartjs.views.lines import BaseLineChartView
 import socket
 import platform
+import requests
 
 @login_required(login_url='/')
 
@@ -36,7 +37,7 @@ def system(request):
                   'Version': platform.version(),
                   'Architecture': platform.machine(),
                   'Hostname': socket.gethostname(),
-                  'IpAdress': socket.gethostbyname(socket.gethostname()),
+                  'IpAdress': requests.get('https://checkip.amazonaws.com').text.strip(),
                   'Processor': platform.processor()}
                   )
 
@@ -63,14 +64,9 @@ class LineChartJSONView(BaseLineChartView):
 
     def get_providers(self):
         """Return names of datasets."""
-        return ["Central", "Eastside", "Westside"]
+        return ["Usage"]
 
     def get_data(self):
         """Return 3 datasets to plot."""
-
-        return [[75, 44, 92, 11, 44, 95, 35],
-                [41, 92, 18, 3, 73, 87, 92],
-                [87, 21, 94, 3, 90, 13, 65]]
-
-
-line_chart_json = LineChartJSONView.as_view()
+        return [[75, 44, 92, 11, 44, 95, 35]]
+    

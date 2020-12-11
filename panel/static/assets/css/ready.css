@@ -6497,8 +6497,21 @@ body {
 }
 
 .modal-content {
-  border-radius: .4rem !important;
+  border-radius: 0 !important;
   border: 0 !important;
+  background-color: #13151b;
+  color: #e9edff;
+}
+
+.cursor-pointer{
+  cursor: pointer;
+}
+.modal-header{
+  border-bottom: 1px solid #000;
+}
+
+.modal-footer{
+  border-top: 1px solid #000;
 }
 
 /* For all zoom buttons */
