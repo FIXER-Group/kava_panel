@@ -18,3 +18,5 @@ six==1.15.0
 sqlparse==0.2.4
 virtualenv==20.1.0
 requests==2.25.0
+Hypercorn==0.11.1
+django-simple-task==0.1.2

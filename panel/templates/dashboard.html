@@ -184,7 +184,7 @@
         labels: data["labels"],
         datasets: [
           {
-            label: "Usage",
+            label: "Usage %",
             data: data["datasets"][0]["data"],
             backgroundColor: 'rgba(89, 208, 93, 0.2)',
             borderColor: [
@@ -197,9 +197,18 @@
           }
         ]
         },
+        options: {
+        scales: {
+            xAxes: [{
+                ticks: {
+                    display: false
+                }
+            }]
+        }
+    }
         });
     });
-    $.getJSON("{% url 'panel:chartcpu' %}", function(data) {
+    $.getJSON("{% url 'panel:chartram' %}", function(data) {
     var ramc = $("#ramChart").get(0).getContext("2d");
         new Chart(ramc, {
             type: 'line', 
@@ -220,6 +229,15 @@
           }
         ]
         },
+        options: {
+        scales: {
+            xAxes: [{
+                ticks: {
+                    display: false
+                }
+            }]
+        }
+    }
             
         });
     });

@@ -5,8 +5,7 @@ import cpuinfo
 import time
 from datetime import datetime
 import asyncio
-
-
+from asgiref.sync import sync_to_async
 
 
 
@@ -81,7 +80,7 @@ class Server_stat(models.Model):
 
 class CPULogs(models.Model):
     created = models.DateField(auto_now_add=True)
-    date = models.CharField(max_length=30, default=datetime.today().strftime("%d %b %Y %H:%M:%S"))
+    date = models.CharField(max_length=30)
     usage = models.FloatField(default=Server_stat.cpu_percent)
 
 
@@ -89,3 +88,20 @@ class RAMLogs(models.Model):
     created = models.DateField(auto_now_add=True)
     date = models.CharField(max_length=30, default=datetime.today().strftime("%d %b %Y %H:%M:%S"))
     usage = models.FloatField(default=Server_stat.ram_percent)
+
+
+@sync_to_async
+def get_logs_cpu():
+    logcpu = CPULogs(date = datetime.today().strftime("%d %b %Y %H:%M:%S"))
+    logcpu.save()
+
+@sync_to_async
+def get_logs_ram():
+    logcpu = RAMLogs(date = datetime.today().strftime("%d %b %Y %H:%M:%S"))
+    logcpu.save()
+
+async def loop_logs():
+    while True:
+        await get_logs_cpu()
+        await get_logs_ram()
+        await asyncio.sleep(60*30)

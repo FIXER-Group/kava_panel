@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from .models import Server_stat, CPULogs
+from .models import Server_stat, CPULogs, RAMLogs
 from django.contrib import messages
 from django.views.generic import TemplateView
 from chartjs.views.lines import BaseLineChartView
@@ -11,11 +11,10 @@ import platform
 import requests
 import datetime
 
+
 @login_required(login_url='/')
 
 def index(request):
-    log = CPULogs()
-    log.save()
     return render(request, 'dashboard.html')
 
 def logout_view(request):
@@ -27,10 +26,6 @@ def logout_view(request):
 def process(request):
     return render(request, 'process.html')
 
-
-@login_required(login_url='/')
-def graphs(request):
-    return render(request, 'graphs.html')
 
 @login_required(login_url='/')
 def system(request):
@@ -76,4 +71,22 @@ class LineChartCpu(BaseLineChartView):
     def get_data(self):
         """Return 3 datasets to plot."""
         return [list(self.results.values_list('usage', flat=True))]
-    
+
+
+class LineChartRam(BaseLineChartView):
+    now = datetime.datetime.now()
+    earlier = now - datetime.timedelta(hours=24)
+    results = RAMLogs.objects.filter(created__range=(earlier,now))
+
+    def get_labels(self):
+        """Return 7 labels for the x-axis."""
+        return list(self.results.values_list('date', flat=True))
+
+    def get_providers(self):
+        """Return names of datasets."""
+        return ["Usage"]
+
+    def get_data(self):
+        """Return 3 datasets to plot."""
+        return [list(self.results.values_list('usage', flat=True))]
+
