@@ -57,17 +57,15 @@ class LineChartCpu(BaseLineChartView):
     now = datetime.datetime.now()
     earlier = now - datetime.timedelta(hours=24)
     results = CPULogs.objects.filter(created__range=(earlier,now))
+    CPULogs.objects.filter(created__lte=datetime.date.today()-datetime.timedelta(days=7)).delete()
 
     def get_labels(self):
-        """Return 7 labels for the x-axis."""
         return list(self.results.values_list('date', flat=True))
 
     def get_providers(self):
-        """Return names of datasets."""
         return ["Usage"]
 
     def get_data(self):
-        """Return 3 datasets to plot."""
         return [list(self.results.values_list('usage', flat=True))]
 
 
@@ -75,16 +73,14 @@ class LineChartRam(BaseLineChartView):
     now = datetime.datetime.now()
     earlier = now - datetime.timedelta(hours=24)
     results = RAMLogs.objects.filter(created__range=(earlier,now))
+    RAMLogs.objects.filter(created__lte=datetime.date.today()-datetime.timedelta(days=7)).delete()
 
     def get_labels(self):
-        """Return 7 labels for the x-axis."""
         return list(self.results.values_list('date', flat=True))
 
     def get_providers(self):
-        """Return names of datasets."""
         return ["Usage"]
 
     def get_data(self):
-        """Return 3 datasets to plot."""
         return [list(self.results.values_list('usage', flat=True))]
 

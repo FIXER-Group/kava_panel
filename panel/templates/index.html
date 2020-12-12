@@ -66,7 +66,8 @@
                     <a href="{% url 'panel:process' %}">
                         <i class="la la-cogs"></i>
                         <p>Processes</p>
-                        <span class="badge badge-count">14</span>
+                        {% load stats %}
+                        <span class="badge badge-count">{%counts_process%}</span>
                     </a>
                 </li>
             </ul>
