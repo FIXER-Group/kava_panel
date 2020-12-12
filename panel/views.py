@@ -2,9 +2,8 @@ from django.shortcuts import render,redirect
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from .models import Server_stat, CPULogs, RAMLogs
+from .models import Server_stat, CPULogs, RAMLogs,Server_processes
 from django.contrib import messages
-from django.views.generic import TemplateView
 from chartjs.views.lines import BaseLineChartView
 import socket
 import platform
@@ -24,8 +23,7 @@ def logout_view(request):
 
 @login_required(login_url='/')
 def process(request):
-    return render(request, 'process.html')
-
+    return render(request, 'process.html', {'List': Server_processes.get_server_processes()})
 
 @login_required(login_url='/')
 def system(request):

@@ -77,6 +77,24 @@ class Server_stat(models.Model):
     def uptime_days():
         return (time.time() - psutil.boot_time())//(60*60*24)
 
+class Server_processes(models.Model):
+    def get_server_processes():
+        listOfProcessNames = list()
+        for proc in psutil.process_iter():
+            pInfoDict = proc.as_dict(attrs=['cpu_percent', 'pid', 'name', 'memory_percent'])
+            orderedDict = {
+                "pid": pInfoDict['pid'],
+                "name": pInfoDict['name'],
+                "cpu_percent": round(pInfoDict['cpu_percent']/10,2),
+                "memory_percent": round(pInfoDict['memory_percent'], 2)
+            }
+            listOfProcessNames.append(orderedDict)
+        return sorted(listOfProcessNames, key=lambda k: k['cpu_percent'], reverse=True)
+
+
+def get_server_processes_number():
+    return len(Server_processes.get_server_processes())
+
 
 class CPULogs(models.Model):
     created = models.DateField(auto_now_add=True)
