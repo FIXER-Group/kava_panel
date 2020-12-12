@@ -17,7 +17,7 @@ sudo pip install -r requirements.txt
 Once `pip` has finished downloading the dependencies:
 ```sh
 cd kava_panel
-hypercorn kava.asgi:application -b :::8000
+uvicorn kava.asgi:application --host 0.0.0.0
 ```
 And navigate to `http://your_vps_ip:8000/`.
 
