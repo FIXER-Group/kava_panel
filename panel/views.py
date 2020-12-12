@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from .models import Server_stat, CPULogs, RAMLogs,Server_processes
+from .models import Server_stat, CPULogs, RAMLogs,Server_processes,Server_connections
 from django.contrib import messages
 from chartjs.views.lines import BaseLineChartView
 import socket
@@ -24,6 +24,10 @@ def logout_view(request):
 @login_required(login_url='/')
 def process(request):
     return render(request, 'process.html', {'List': Server_processes.get_server_processes()})
+
+@login_required(login_url='/')
+def network(request):
+    return render(request, 'network.html', {'List': Server_connections.get_server_network_connections()})
 
 @login_required(login_url='/')
 def system(request):

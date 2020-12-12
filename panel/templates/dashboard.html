@@ -7,8 +7,8 @@
         <div class="container-fluid">
             <h4 class="page-title">Dashboard</h4>
             <div class="row">
-                <div class="col-md-3 cursor-pointer">
-                    <div class="card card-stats card-danger" data-toggle="modal" data-target="#restart">
+                <div class="col-md-3">
+                    <div class="card card-stats cursor-pointer card-danger" data-toggle="modal" data-target="#restart">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-5">
@@ -294,7 +294,6 @@
                             $('#core_id'+i).css("background-color", getCriticColor(json[i].toFixed(0)));
                             $('#core_id'+i).animate({width: json[i].toFixed(0)+"%"},100);
                             $('#core_id_label'+i).html(json[i].toFixed(0)+"%")
-
                         }
                         var swap_percent = data['swap_percent'];
                         $('#swap_bar').css("background-color", getCriticColor(swap_percent.toFixed(0)));

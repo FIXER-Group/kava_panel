@@ -70,6 +70,14 @@
                         <span class="badge badge-count">{%counts_process%}</span>
                     </a>
                 </li>
+                <li class="nav-item {% if request.resolver_match.url_name == 'network' %}active{% endif %}">
+                    <a href="{% url 'panel:network' %}">
+                        <i class="la la-cogs"></i>
+                        <p>Network</p>
+                        {% load stats %}
+                        <span class="badge badge-count">{% count_connections %}</span>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

@@ -3,6 +3,8 @@ import math
 import psutil
 import cpuinfo
 import time
+import socket
+from socket import AF_INET, SOCK_STREAM, SOCK_DGRAM
 from datetime import datetime
 import asyncio
 from asgiref.sync import sync_to_async
@@ -90,6 +92,37 @@ class Server_processes(models.Model):
             }
             listOfProcessNames.append(orderedDict)
         return sorted(listOfProcessNames, key=lambda k: k['cpu_percent'], reverse=True)
+
+class Server_connections(models.Model):
+    def get_server_network_connections():
+        AD = "-"
+        AF_INET6 = getattr(socket, 'AF_INET6', object())
+        proto_map = {
+            (AF_INET, SOCK_STREAM): 'tcp',
+            (AF_INET6, SOCK_STREAM): 'tcp6',
+            (AF_INET, SOCK_DGRAM): 'udp',
+            (AF_INET6, SOCK_DGRAM): 'udp6',
+        }
+        proc_names = {}
+        listofnetworkconnections=[]
+        for p in psutil.process_iter(['pid', 'name']):
+            proc_names[p.info['pid']] = p.info['name']
+        for c in psutil.net_connections(kind='inet'):
+            laddr = "%s:%s" % c.laddr
+            raddr = ""
+            if c.raddr:
+                raddr = "%s:%s" % c.raddr
+            name = proc_names.get(c.pid, '?') or ''
+            dictionary={
+                "Protocol": proto_map[(c.family, c.type)],
+                "Local_address": laddr,
+                "Remote_address": raddr or AD,
+                "Status:": c.status,
+                "PID": c.pid or AD,
+                "Name": name,
+                }
+            listofnetworkconnections.append(dictionary)
+        return listofnetworkconnections
 
 
 def get_server_processes_number():

@@ -8,6 +8,7 @@ app_name="panel"
 urlpatterns = [
     path('', views.index, name='index'),
     path('process/', views.process, name='process'),
+    path('network/', views.network, name='network'),
     path('logout/', views.logout_view, name='logout'),
     path('system/', views.system, name='system'),
     path('json/chartcpu', views.LineChartCpu.as_view(), name='chartcpu'),
