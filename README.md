@@ -1,4 +1,5 @@
 # kava_panel
+![alt text](https://i.imgur.com/WNnJkfA.png)
 
 ## Setup
 
