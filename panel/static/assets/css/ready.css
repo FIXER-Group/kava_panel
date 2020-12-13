@@ -135,8 +135,8 @@ h4.page-title {
 }
 
 label {
-  color: #3f4047 !important;
-  font-size: 14px !important;
+  color:#e9edff !important;
+  font-size: 16px !important;
 }
 
 /*   Font-weight    */
@@ -5446,7 +5446,7 @@ body {
 
 .form-group label, .form-check label {
   margin-bottom: .5rem !important;
-  color: #3f4047 !important;
+  color: #d4d4d4 !important;
   font-weight: 400;
   font-size: 1rem;
 }
@@ -5457,6 +5457,54 @@ body {
 
 .input-fixed {
   width: 200px;
+}
+.form-control {
+  color: #495057;
+  background-color: #0f1015;
+  border: 1px solid #0f1015;
+}
+
+input[type=password] {
+  background-color: #0e1015;
+  border: none;
+  color: #adadad;
+  padding: 15px 32px;
+  width:85%;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 5px;
+  outline: none !important;
+}
+
+input[type=password]:focus {
+  background-color: #0e1015;
+  border-bottom: 2px solid #44d629;
+  outline:none;
+}
+
+textarea:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+.uneditable-input:focus {   
+  background-color: #0f1015;
+  border-color: #0f1015;
+  border-bottom: 2px solid #44d629;
+  outline: none !important;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(126, 239, 104, 0.6);
+  outline: 0 none;
 }
 
 .form-control.input-full {
@@ -5691,7 +5739,7 @@ body {
   text-align: center;
 }
 .navbar .navbar-nav .nav-item .nav-link i {
-  font-size: 22px;
+  font-size: 32px;
   width: 30px;
   vertical-align: middle;
 }
@@ -6699,17 +6747,15 @@ body {
   }
 
   .navbar-header {
-    border-top: 1px solid #eee;
     position: absolute;
     width: 100%;
-    background: #ffffff;
+    background: #13151b;
     transform: translate3d(0, -200px, 0) !important;
     transition: all .5s;
   }
 
   .topbar_open .navbar-header {
     transform: translate3d(0, 54px, 0) !important;
-    border-bottom: 1px solid #eee;
   }
   .topbar_open .main-panel {
     transform: translate3d(0, 125px, 0) !important;

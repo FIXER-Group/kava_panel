@@ -1,0 +1,94 @@
+{% extends "index.html" %}
+{% block title %}
+    Edit profile
+{% endblock %}
+{% block content %}
+<div class="content">
+    <div class="container-fluid">
+        <h4 class="page-title">Edit profile</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Change password</div>
+                    </div>
+                    <div class="card-body">
+                        <form class="change_pass" method="post">
+                            {% csrf_token %}
+                            {% for f in form %}<div class="form-group">
+                            {{f.label_tag}} <br> {{f}} <br>
+                            </div>
+                            {% endfor %}
+                            <div class="form-group">
+                            <button  class="btn btn-success" type="submit">Save changes</button>
+                            </div>
+                          </form>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Two-factor authentication</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <button class="btn btn-success">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Change avatar</div>
+                        </div>
+                        <div class="card-body">
+                            <button class="btn btn-success">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+{% endblock %}
+{% block javascript %}
+{% if form.errors %}
+{% for f in form %}
+{% if f.errors|length > 0 %}
+<script>
+	$.notify({
+		icon: 'las la-exclamation-triangle',
+		message: '{{f.errors|striptags}} '
+	},{
+		type: 'danger',
+		placement: {
+			from: "top",
+			align: "right"
+		},
+		time: 3000,
+	});
+</script>>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% for message in messages %}
+{% if 'password_changed' in message.tags %}
+<script>
+	$.notify({
+		icon: 'las la-check-circle',
+		message: 'The password has been changed'
+	},{
+		type: 'success',
+		placement: {
+			from: "top",
+			align: "right"
+		},
+		time: 3000,
+	});
+</script>>
+{% endif %}
+{% endfor %}
+
+{% endblock %}

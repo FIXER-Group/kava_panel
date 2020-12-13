@@ -21,8 +21,21 @@
             <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            <button class="topbar-toggler more"><i class="la la-ellipsis-v"></i></button>
         </div>
-    </div>
+        <nav class="navbar navbar-header navbar-expand-lg">
+            <div class="container-fluid">
+                
+                <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
+                    <li class="nav-item dropdown hidden-caret">
+                        <a class="nav-link dropdown-toggle" href="https://github.com/androjus/kava_panel" target="_blank" aria-haspopup="true" aria-expanded="true">
+                        <i class="la la-github"></i>
+                    </a>
+                    </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
     <div class="sidebar">
         <div class="scrollbar-inner sidebar-wrapper">
             <div class="user">
@@ -40,6 +53,11 @@
 
                     <div class="collapse in" id="collapseExample" aria-expanded="true">
                         <ul class="nav">
+                            <li>
+                                <a href="{% url 'panel:edit_profile' %}">
+                                    <span class="link-collapse">Edit profile</span>
+                                </a>
+                            </li>
                             <li>
                                 <a href="{% url 'panel:logout' %}">
                                     <span class="link-collapse">Log out</span>
@@ -72,9 +90,8 @@
                 </li>
                 <li class="nav-item {% if request.resolver_match.url_name == 'network' %}active{% endif %}">
                     <a href="{% url 'panel:network' %}">
-                        <i class="la la-cogs"></i>
+                        <i class="la la-ethernet"></i>
                         <p>Network</p>
-                        {% load stats %}
                         <span class="badge badge-count">{% count_connections %}</span>
                     </a>
                 </li>

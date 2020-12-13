@@ -2,6 +2,8 @@ from django.urls import path
 from panel import views
 from .models import loop_logs
 from django_simple_task import defer
+from django.contrib.auth.forms import AdminPasswordChangeForm
+
 
 
 app_name="panel"
@@ -11,6 +13,7 @@ urlpatterns = [
     path('network/', views.network, name='network'),
     path('logout/', views.logout_view, name='logout'),
     path('system/', views.system, name='system'),
+    path('edit-profile/', views.edit_profile, name='edit_profile'),
     path('json/chartcpu', views.LineChartCpu.as_view(), name='chartcpu'),
     path('json/chartram', views.LineChartRam.as_view(), name='chartram'),
     path('json/stats_update', views.stats_update, name='stats_update'),

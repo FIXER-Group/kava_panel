@@ -1,6 +1,10 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import SetPasswordForm
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from .models import Server_stat, CPULogs, RAMLogs,Server_processes,Server_connections
 from django.contrib import messages
@@ -20,6 +24,19 @@ def logout_view(request):
     logout(request)
     messages.info(request, 'Logout_message', extra_tags='logout')
     return redirect('accounts:index')
+
+@login_required(login_url='/')
+def edit_profile(request):
+    if request.method == "POST":
+        form = SetPasswordForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, form.user)
+            messages.info(request, 'password_changed', extra_tags='password_changed')
+            return redirect('panel:edit_profile')
+    else:
+        form = SetPasswordForm(user=request.user)
+    return render(request, 'edit_profile.html', {'form' : form})
 
 @login_required(login_url='/')
 def process(request):
