@@ -10,7 +10,7 @@
             <div class="col">
             <div class="card">
                 <div class="card-body">
-                    <table class="table table-responsive-stack" id="tableOne">
+                    <table class="table table-responsive-stack order-column" id="tableOne">
                         <thead>
                             <tr>
                                 <th scope="col" class="th_show">PID</th>
@@ -39,10 +39,18 @@
             </div>
         </div>
     </div>
+    </div>
 </div>
 {% endblock %}
 {% block javascript %}
 <script>
+$(document).ready( function () {
+    $('#tableOne').DataTable({
+        paging:         false,
+        columnDefs: [{ width: 200, targets: 0 }],
+        fixedColumns: true
+    });
+} );
 $(document).ready(function() {
 $('.table-responsive-stack').each(function (i) {
    var id = $(this).attr('id');

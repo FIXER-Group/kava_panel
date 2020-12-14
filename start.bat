@@ -23,30 +23,24 @@ goto :Option1
 
 
 :Option1
-:::: Do stuff here
 pip install -r requirements.txt
 python manage.py makemigrations
 python manage.py migrate
 python manage.py createsuperuser
-python manage.py hypercorn kava.asgi:application
-:::: Return to menu
-goto :Menu
+uvicorn kava.asgi:application --host 0.0.0.0
+goto :End
 
 
 :Option2
-:::: Do stuff here
-hypercorn kava.asgi:application
-
-:::: Return to menu
-goto :Menu
-
-
-:Option3
+uvicorn kava.asgi:application --host 0.0.0.0
 
 goto :End
 
 
-:::: End of file. Pause and clean up
+
+goto :End
+
+
 :End
 echo.
 echo Exiting....
