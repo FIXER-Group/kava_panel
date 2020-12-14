@@ -13,11 +13,11 @@
                     <table class="table table-responsive-stack order-column" id="tableOne">
                         <thead>
                             <tr>
-                                <th scope="col" class="th_show">PID</th>
-                                <th scope="col" class="th_show">Name</th>
-                                <th scope="col" class="th_show">CPU%</th>
-                                <th scope="col" class="th_show">MEM%</th>
-                                <th scope="col"></th>
+                                <th class="th_show">PID</th>
+                                <th class="th_show">Name</th>
+                                <th class="th_show">CPU%</th>
+                                <th class="th_show">MEM%</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -46,9 +46,10 @@
 <script>
 $(document).ready( function () {
     $('#tableOne').DataTable({
-        paging:         false,
-        columnDefs: [{ width: 200, targets: 0 }],
-        fixedColumns: true
+        paging: false,
+        autoWidth: false,
+        fixedColumns: true,
+        columnDefs: [{ width: 50, targets: 0 }],
     });
 } );
 $(document).ready(function() {
@@ -84,7 +85,6 @@ window.onresize = function(event) {
 };
 
 });
-
 </script>
 {% endblock %}
  

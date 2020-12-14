@@ -75,10 +75,10 @@ def stats_update(request):
 
 
 class LineChartCpu(BaseLineChartView):
-    now = datetime.datetime.now()
-    earlier = now - datetime.timedelta(hours=24)
-    results = CPULogs.objects.filter(created__range=(earlier,now))
-    CPULogs.objects.filter(created__lte=datetime.date.today()-datetime.timedelta(days=7)).delete()
+    def __init__(self):
+        self.now = datetime.datetime.now()
+        self.earlier = self.now - datetime.timedelta(hours=24)
+        self.results = CPULogs.objects.filter(created__range=(self.earlier,self.now))
 
     def get_labels(self):
         return list(self.results.values_list('date', flat=True))
@@ -87,14 +87,18 @@ class LineChartCpu(BaseLineChartView):
         return ["Usage"]
 
     def get_data(self):
+        self.now = datetime.datetime.now()
+        self.earlier = self.now - datetime.timedelta(hours=24)
+        self.results = CPULogs.objects.filter(created__range=(self.earlier,self.now))
+        CPULogs.objects.filter(created__lte=datetime.date.today()-datetime.timedelta(days=7)).delete()
         return [list(self.results.values_list('usage', flat=True))]
 
 
 class LineChartRam(BaseLineChartView):
-    now = datetime.datetime.now()
-    earlier = now - datetime.timedelta(hours=24)
-    results = RAMLogs.objects.filter(created__range=(earlier,now))
-    RAMLogs.objects.filter(created__lte=datetime.date.today()-datetime.timedelta(days=7)).delete()
+    def __init__(self):
+        self.now = datetime.datetime.now()
+        self.earlier = self.now - datetime.timedelta(hours=24)
+        self.results = RAMLogs.objects.filter(created__range=(self.earlier,self.now))
 
     def get_labels(self):
         return list(self.results.values_list('date', flat=True))
@@ -103,5 +107,9 @@ class LineChartRam(BaseLineChartView):
         return ["Usage"]
 
     def get_data(self):
+        self.now = datetime.datetime.now()
+        self.earlier = self.now - datetime.timedelta(hours=24)
+        self.results = RAMLogs.objects.filter(created__range=(self.earlier,self.now))
+        RAMLogs.objects.filter(created__lte=datetime.date.today()-datetime.timedelta(days=7)).delete()
         return [list(self.results.values_list('usage', flat=True))]
 
