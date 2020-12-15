@@ -13,6 +13,8 @@ import socket
 import platform
 import requests
 import datetime
+from rest_framework.authtoken.models import Token
+
 
 
 @login_required(login_url='/')
@@ -27,6 +29,7 @@ def logout_view(request):
 
 @login_required(login_url='/')
 def edit_profile(request):
+    token, created = Token.objects.get_or_create(user=request.user)
     if request.method == "POST":
         form = SetPasswordForm(user=request.user, data=request.POST)
         if form.is_valid():
@@ -36,7 +39,7 @@ def edit_profile(request):
             return redirect('panel:edit_profile')
     else:
         form = SetPasswordForm(user=request.user)
-    return render(request, 'edit_profile.html', {'form' : form})
+    return render(request, 'edit_profile.html', {'form' : form, 'token': token.key})
 
 @login_required(login_url='/')
 def process(request):

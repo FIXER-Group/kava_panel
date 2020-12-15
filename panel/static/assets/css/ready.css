@@ -5067,6 +5067,8 @@ body {
   content: "\f38d";
 }
 
+
+
 /*     Card     */
 .card {
   border-radius: 0px;
@@ -5119,6 +5121,7 @@ body {
 }
 .card .card-body {
   padding: 15px 15px 10px 15px;
+  color: #d4d4d4 !important;
 }
 .card .card-footer {
   background-color: transparent;
@@ -5458,10 +5461,16 @@ body {
 .input-fixed {
   width: 200px;
 }
-.form-control {
-  color: #495057;
-  background-color: #0f1015;
-  border: 1px solid #0f1015;
+.form-control:disabled, .form-control[readonly] {
+  background: #0e1015 !important;
+  border: none;
+  color: #adadad !important;
+  padding: 15px 32px;
+  width: 85%;
+  display: inline-block;
+  font-size: 16px;
+  margin: 5px;
+  outline: none !important;
 }
 
 input[type=password] {
@@ -5579,10 +5588,6 @@ input[type="color"]:focus,
   border-color: #e8e8e8 !important;
 }
 
-.form-control:disabled, .form-control[readonly] {
-  background: #e8e8e8 !important;
-  border-color: #e8e8e8 !important;
-}
 .form-control:disabled, .form-control[readonly] {
   opacity: 0.6 !important;
 }
