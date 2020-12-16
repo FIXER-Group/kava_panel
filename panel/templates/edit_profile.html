@@ -44,7 +44,10 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <p>Token is needed to access the Kava Panel API.</p>
-                                <input class="form-control" type="text" placeholder="{{ token }}" readonly>
+                                <input id="auth_key" class="form-control" type="text" placeholder="{{ token }}" value="{{ token }}" readonly>
+                                 <div class="form-group">
+                                    <button class="btn btn-success" onclick="CopyToClipboard();">Copy auth token</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -57,6 +60,23 @@
 </div>
 {% endblock %}
 {% block javascript %}
+<script>
+function CopyToClipboard() {
+    let copyText = document.getElementById("auth_key");
+    copyText.select();
+    document.execCommand("copy");
+	$.notify({
+		message: 'Copied to clipboard'
+	},{
+		type: 'info',
+		placement: {
+			from: "top",
+			align: "right"
+		},
+		time: 3000,
+	});
+}
+    </script>
 {% if form.errors %}
 {% for f in form %}
 {% if f.errors|length > 0 %}

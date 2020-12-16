@@ -6,7 +6,7 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import SetPasswordForm
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
-from .models import Server_stat, CPULogs, RAMLogs,Server_processes,Server_connections
+from .models import Server_stat, CPULogs, RAMLogs,Server_processes,Server_connections,Server_connection_speed
 from django.contrib import messages
 from chartjs.views.lines import BaseLineChartView
 import socket
@@ -73,7 +73,10 @@ def stats_update(request):
                 'disk_usage': Server_stat.disk_usage(),
                 'swap_percent': Server_stat.swap_percent(),
                 'swap_total': Server_stat.swap_total(),
-                'uptime': Server_stat.uptime_days()}
+                'uptime': Server_stat.uptime_days(),
+                # 'upload': Server_connection_speed.network_upload(),
+                # 'download': Server_connection_speed.network_download()
+                }
      return JsonResponse(results)
 
 

@@ -124,6 +124,31 @@ class Server_connections(models.Model):
             listofnetworkconnections.append(dictionary)
         return listofnetworkconnections
 
+class Server_connection_speed(models.Model):
+    def network_upload():
+        upload = psutil.net_io_counters()[0]
+        time.sleep(5);
+        upload2 = psutil.net_io_counters()[0]
+        size_bytes = upload2 - upload
+        if size_bytes == 0:
+            return "0B"
+        size_name = ("B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
+        i = int(math.floor(math.log(size_bytes, 1024)))
+        p = math.pow(1024, i)
+        s = round(size_bytes / p, 2)
+        return "%s %s" % (s, size_name[i])
+    def network_download():
+        download = psutil.net_io_counters()[1]
+        time.sleep(5);
+        download2 = psutil.net_io_counters()[1]
+        size_bytes = download2 - download
+        if size_bytes == 0:
+            return "0B"
+        size_name = ("B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
+        i = int(math.floor(math.log(size_bytes, 1024)))
+        p = math.pow(1024, i)
+        s = round(size_bytes / p, 2)
+        return "%s %s" % (s, size_name[i])
 
 def get_server_processes_number():
     return len(Server_processes.get_server_processes())

@@ -39,18 +39,15 @@
             </div>
         </div>
     </div>
+    </div>
 </div>
 {% endblock %}
 {% block javascript %}
 <script>
 $(document).ready( function () {
-    $('#tableOne').DataTable({
-        paging:         false,
-        autoWidth: false,
-        fixedColumns: true,
-        columnDefs: [{ width: 50, targets: 0 }],
-    });
-} );
+$("#tableOne").dataTable({
+});
+});
 $(document).ready(function() {
 $('.table-responsive-stack').each(function (i) {
    var id = $(this).attr('id');

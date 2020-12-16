@@ -44,6 +44,44 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-md-3">
+                    <div class="card card-stats">
+                        <div class="card-body ">
+                            <div class="row">
+                                <div class="col-5">
+                                    <div class="icon-big text-center">
+                                        <i class="la la-arrow-alt-circle-down text-success"></i>
+                                    </div>
+                                </div>
+                                <div class="col-7 d-flex align-items-center">
+                                    <div class="numbers">
+                                        <p class="card-category">Upload</p>
+                                        <h4 class="card-title" id="upload">Loading...</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card card-stats">
+                        <div class="card-body ">
+                            <div class="row">
+                                <div class="col-5">
+                                    <div class="icon-big text-center">
+                                        <i class="la la-arrow-alt-circle-up text-success"></i>
+                                    </div>
+                                </div>
+                                <div class="col-7 d-flex align-items-center">
+                                    <div class="numbers">
+                                        <p class="card-category">Download</p>
+                                        <h4 class="card-title" id="download">Loading...</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="row">
                 <div class="col-md-4">
@@ -256,7 +294,11 @@
                     $('#swap_total').html(swap_total);
                     var uptime = data['uptime'];
                     $('#uptime').html((uptime.toFixed(0)>1) ? (uptime.toFixed(0) + " days") : (uptime.toFixed(0) +" day"));
-                    var cpu_percent = data['cpu_percent'];
+                    var network_upload= data['upload']
+                    //$('#upload').html(network_upload);
+                    //var network_download= data['download']
+                    //$('#download').html(network_download);
+                    //var cpu_percent = data['cpu_percent'];
                     cpu_circle.update(cpu_percent.toFixed(0));
                     cpu_circle.updateColors(['#eee', getCriticColor(cpu_percent.toFixed(0))]);
                     var ram_percent = data['ram_percent'];
@@ -281,6 +323,10 @@
                 $.getJSON("{% url 'panel:stats_update' %}",
                     function (data) {
                         var json = data['cpu_per_core'];
+                        //var network_upload= data['upload']
+                        //$('#upload').html(network_upload);
+                        //var network_download= data['download']
+                        //$('#download').html(network_download);
                         var cpu_percent = data['cpu_percent'];
                         cpu_circle.update(cpu_percent.toFixed(0));
                         cpu_circle.updateColors(['#eee', getCriticColor(cpu_percent.toFixed(0))]);
