@@ -74,8 +74,8 @@ def stats_update(request):
                 'swap_percent': Server_stat.swap_percent(),
                 'swap_total': Server_stat.swap_total(),
                 'uptime': Server_stat.uptime_days(),
-                # 'upload': Server_connection_speed.network_upload(),
-                # 'download': Server_connection_speed.network_download()
+                'upload': Server_connection_speed.network_usage()[0],
+                'download': Server_connection_speed.network_usage()[1]
                 }
      return JsonResponse(results)
 

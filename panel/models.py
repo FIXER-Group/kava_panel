@@ -125,30 +125,30 @@ class Server_connections(models.Model):
         return listofnetworkconnections
 
 class Server_connection_speed(models.Model):
-    def network_upload():
+    def network_usage():
         upload = psutil.net_io_counters()[0]
-        time.sleep(5);
-        upload2 = psutil.net_io_counters()[0]
-        size_bytes = upload2 - upload
-        if size_bytes == 0:
-            return "0B"
-        size_name = ("B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
-        i = int(math.floor(math.log(size_bytes, 1024)))
-        p = math.pow(1024, i)
-        s = round(size_bytes / p, 2)
-        return "%s %s" % (s, size_name[i])
-    def network_download():
         download = psutil.net_io_counters()[1]
-        time.sleep(5);
+        time.sleep(1);
+        upload2 = psutil.net_io_counters()[0]
         download2 = psutil.net_io_counters()[1]
-        size_bytes = download2 - download
-        if size_bytes == 0:
-            return "0B"
+        size_bytes = (upload2 - upload)
+        size_bytes2 = (download2 - download)
         size_name = ("B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
-        i = int(math.floor(math.log(size_bytes, 1024)))
-        p = math.pow(1024, i)
-        s = round(size_bytes / p, 2)
-        return "%s %s" % (s, size_name[i])
+        if size_bytes == 0:
+            upload_return =  "0B"
+        else:
+            i = int(math.floor(math.log(size_bytes, 1024)))
+            p = math.pow(1024, i)
+            s = round(size_bytes / p, 2)
+            upload_return = f"{s} {size_name[i]}"
+        if size_bytes2 == 0:
+            download_return = "0B"
+        else:
+            i = int(math.floor(math.log(size_bytes2, 1024)))
+            p = math.pow(1024, i)
+            s = round(size_bytes2 / p, 2)
+            download_return = f"{s} {size_name[i]}"
+        return upload_return, download_return
 
 def get_server_processes_number():
     return len(Server_processes.get_server_processes())
