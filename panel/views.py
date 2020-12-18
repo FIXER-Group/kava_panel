@@ -1,7 +1,5 @@
-from django.shortcuts import render,redirect
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import SetPasswordForm
 from django.shortcuts import render, redirect
@@ -14,7 +12,6 @@ import platform
 import requests
 import datetime
 from rest_framework.authtoken.models import Token
-
 
 
 @login_required(login_url='/')

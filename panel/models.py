@@ -29,7 +29,7 @@ class Server_stat(models.Model):
         i = int(math.floor(math.log(size_bytes, 1024)))
         p = math.pow(1024, i)
         s = round(size_bytes / p, 2)
-        return "%s %s" % (s, size_name[i])
+        return f"{s} {size_name[i]}"
 
     def ram_total():
         size_bytes = psutil.virtual_memory().total
@@ -39,7 +39,7 @@ class Server_stat(models.Model):
         i = int(math.floor(math.log(size_bytes, 1024)))
         p = math.pow(1024, i)
         s = round(size_bytes / p, 2)
-        return "%s %s" % (s, size_name[i])
+        return f"{s} {size_name[i]}"
 
     def disk_percent():
         return psutil.disk_usage('/').percent
@@ -52,7 +52,7 @@ class Server_stat(models.Model):
         i = int(math.floor(math.log(size_bytes, 1024)))
         p = math.pow(1024, i)
         s = round(size_bytes / p, 2)
-        return "%s %s" % (s, size_name[i])
+        return f"{s} {size_name[i]}"
     def disk_usage():
         size_bytes = psutil.disk_usage('/').used
         if size_bytes == 0:
@@ -61,7 +61,7 @@ class Server_stat(models.Model):
         i = int(math.floor(math.log(size_bytes, 1024)))
         p = math.pow(1024, i)
         s = round(size_bytes / p, 2)
-        return "%s %s" % (s, size_name[i])
+        return f"{s} {size_name[i]}"
 
     def swap_percent():
         return psutil.swap_memory().percent
@@ -74,7 +74,7 @@ class Server_stat(models.Model):
         i = int(math.floor(math.log(size_bytes, 1024)))
         p = math.pow(1024, i)
         s = round(size_bytes / p, 2)
-        return "%s %s" % (s, size_name[i])
+        return f"{s} {size_name[i]}"
 
     def uptime_days():
         return (time.time() - psutil.boot_time())//(60*60*24)
@@ -168,13 +168,13 @@ class RAMLogs(models.Model):
 
 @sync_to_async
 def get_logs_cpu():
-    logcpu = CPULogs(date = datetime.today().strftime("%d %b %Y %H:%M:%S"))
+    logcpu = CPULogs(date=datetime.today().strftime("%d %b %Y %H:%M:%S"))
     logcpu.save()
 
 @sync_to_async
 def get_logs_ram():
-    logcpu = RAMLogs(date = datetime.today().strftime("%d %b %Y %H:%M:%S"))
-    logcpu.save()
+    logram = RAMLogs(date=datetime.today().strftime("%d %b %Y %H:%M:%S"))
+    logram.save()
 
 async def loop_logs():
     while True:
