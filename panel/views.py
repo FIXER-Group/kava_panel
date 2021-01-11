@@ -64,7 +64,8 @@ def system(request):
                   'IpAdress': requests.get('https://checkip.amazonaws.com').text.strip(),
                   'Processor': platform.processor()}
                   )
-
+                  
+@login_required(login_url='/')
 def stats_update(request):
      results = {'cpu_percent': Server_stat.cpu_percent(),
                 'cpu_per_core': Server_stat.cpu_percent(True),
