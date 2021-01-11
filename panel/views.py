@@ -12,6 +12,9 @@ import platform
 import requests
 import datetime
 from rest_framework.authtoken.models import Token
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 
 
 @login_required(login_url='/')
@@ -45,6 +48,10 @@ def process(request):
 @login_required(login_url='/')
 def network(request):
     return render(request, 'network.html', {'List': Server_connections.get_server_network_connections()})
+
+@login_required(login_url='/')
+def webs(request):
+    return render(request, 'webs.html')
 
 @login_required(login_url='/')
 def system(request):
@@ -115,4 +122,49 @@ class LineChartRam(BaseLineChartView):
         self.results = RAMLogs.objects.filter(created__range=(self.earlier,self.now))
         RAMLogs.objects.filter(created__lte=datetime.date.today()-datetime.timedelta(days=7)).delete()
         return [list(self.results.values_list('usage', flat=True))]
+
+class StatsAPIView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        content = {'cpu_percent': Server_stat.cpu_percent(),
+                'cpu_per_core': Server_stat.cpu_percent(True),
+                'cpu_name': Server_stat.cpu_name(),
+                'ram_percent': Server_stat.ram_percent(),
+                'ram_total': Server_stat.ram_total(),
+                'ram_usage': Server_stat.ram_used(),
+                'disk_percent': Server_stat.disk_percent(),
+                'disk_total': Server_stat.disk_total(),
+                'disk_usage': Server_stat.disk_usage(),
+                'swap_percent': Server_stat.swap_percent(),
+                'swap_total': Server_stat.swap_total(),
+                'uptime': Server_stat.uptime_days()}
+        return Response(content)
+
+class SystemAPIView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        content = {'name': platform.system(),
+                  'release': platform.release(),
+                  'version': platform.version(),
+                  'architecture': platform.machine(),
+                  'hostname': socket.gethostname(),
+                  'ipadress': requests.get('https://checkip.amazonaws.com').text.strip(),
+                  'processor': platform.processor()}
+        return Response(content)
+
+class ProcessListAPIView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        content = {'List': Server_processes.get_server_processes()}
+        return Response(content)
+
+class NetworkListAPIView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        content = {'List': Server_connections.get_server_network_connections()}
+        return Response(content)
 

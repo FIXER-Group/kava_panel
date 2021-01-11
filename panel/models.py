@@ -11,6 +11,7 @@ from asgiref.sync import sync_to_async
 
 
 
+
 class Server_stat(models.Model):
 
     def cpu_percent(percore=False):
@@ -152,6 +153,7 @@ class Server_connection_speed(models.Model):
 
 def get_server_processes_number():
     return len(Server_processes.get_server_processes())
+
 
 
 class CPULogs(models.Model):

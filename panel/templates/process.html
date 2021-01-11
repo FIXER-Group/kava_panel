@@ -44,15 +44,13 @@
 {% endblock %}
 {% block javascript %}
 <script>
-$(document).ready( function () {
+$(document).ready(function() {
     $('#tableOne').DataTable({
         paging: false,
         autoWidth: false,
         fixedColumns: true,
         columnDefs: [{ width: 50, targets: 0 }],
     });
-} );
-$(document).ready(function() {
 $('.table-responsive-stack').each(function (i) {
    var id = $(this).attr('id');
    $(this).find(".th_show").each(function(i) {

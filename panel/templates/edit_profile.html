@@ -66,9 +66,10 @@ function CopyToClipboard() {
     copyText.select();
     document.execCommand("copy");
 	$.notify({
+		icon: 'las la-check-circle',
 		message: 'Copied to clipboard'
 	},{
-		type: 'info',
+		type: 'success',
 		placement: {
 			from: "top",
 			align: "right"

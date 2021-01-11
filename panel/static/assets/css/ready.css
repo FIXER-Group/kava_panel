@@ -5485,6 +5485,17 @@ input[type=password] {
   margin: 5px;
   outline: none !important;
 }
+input[type=search] {
+  background-color: #0e1015;
+  border: none;
+  color: #adadad;
+  width:85%;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 5px;
+  outline: none !important;
+}
 
 input[type=password]:focus {
   background-color: #0e1015;
