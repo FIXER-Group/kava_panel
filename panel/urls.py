@@ -22,7 +22,7 @@ urlpatterns = [
     path('api/stats', views.StatsAPIView.as_view(), name='statsapi'),
     path('api/system', views.SystemAPIView.as_view(), name='systemapi'),
     path('api/process', views.ProcessListAPIView.as_view(), name='processapi'),
-    path('api/network', views.ProcessListAPIView.as_view(), name='networkapi'),
+    path('api/network', views.NetworkListAPIView.as_view(), name='networkapi'),
 ]
 
 defer(loop_logs)
