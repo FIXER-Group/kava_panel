@@ -10,3 +10,6 @@ def counts_process():
 @register.simple_tag
 def count_connections():
     return len(Server_connections.get_server_network_connections())
+
+@register.filter 
+def get_item(dictionary, key): return dictionary.get(key)

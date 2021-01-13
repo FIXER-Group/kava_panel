@@ -15,6 +15,8 @@ from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
+from rest_framework import status
+
 
 
 @login_required(login_url='/')
@@ -43,6 +45,12 @@ def edit_profile(request):
 
 @login_required(login_url='/')
 def process(request):
+    if request.method == "POST":
+        try:
+            Server_processes.kill_server_process(int(request.POST.get('process')))
+            messages.info(request, 'process_killed', extra_tags='process_killed')
+        except:
+            messages.info(request, 'error_killed', extra_tags='error_killed')
     return render(request, 'process.html', {'List': Server_processes.get_server_processes()})
 
 @login_required(login_url='/')
@@ -160,7 +168,14 @@ class ProcessListAPIView(APIView):
 
     def get(self, request):
         content = {'List': Server_processes.get_server_processes()}
-        return Response(content)
+        return Response(content, status=status.HTTP_200_OK)
+
+    def post(self, request):
+        try:
+            Server_processes.kill_server_process(int(request.data.get("pid")))
+            return Response(True, status=status.HTTP_200_OK)
+        except:
+            return Response(False, status=status.HTTP_400_BAD_REQUEST)
 
 class NetworkListAPIView(APIView):
     permission_classes = (IsAuthenticated,)

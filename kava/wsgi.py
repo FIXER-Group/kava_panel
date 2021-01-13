@@ -10,7 +10,9 @@ https://docs.djangoproject.com/en/3.1/howto/deployment/wsgi/
 import os
 
 from django.core.wsgi import get_wsgi_application
-
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'kava.settings')
+from whitenoise.django import DjangoWhiteNoise
 
 application = get_wsgi_application()
+application = DjangoWhiteNoise(application)
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'kava.settings')

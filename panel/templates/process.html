@@ -30,7 +30,7 @@
                                         <td>{{ value }}</td>
                                     {% endif %}
                                 {% endfor %}
-                                <td><button type="button" class="btn btn-danger"><i class="las la-times"></i> KILL</button></td>
+                                <td><button type="button" class="btn btn-danger" data-toggle="modal" data-pid="{{ dict|get_item:"pid" }}" data-name="{{ dict|get_item:"name" }}" data-target="#confirm-kill"><i class="las la-times"></i> KILL</button></td>
                             </tr>
                         {% endfor %}
                         </tbody>
@@ -41,10 +41,35 @@
     </div>
     </div>
 </div>
+<div class="modal fade" id="confirm-kill" tabindex="-1" role="dialog" aria-labelledby="reboot" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle"><i class="las la-times"></i> Kill process</h5>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to stop the process?</p>
+          <p class="name-process"></p>       
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <form method="POST" action="{% url 'panel:process' %}">
+            {% csrf_token %}
+            <input class="btn-ok" name="process" type="hidden">
+          <button type="submit" class="btn btn-danger"><i class="las la-times"></i> KILL</button>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
 {% block javascript %}
 <script>
 $(document).ready(function() {
+    $('#confirm-kill').on('show.bs.modal', function(e) {
+    $(this).find('.btn-ok').attr('value', $(e.relatedTarget).data('pid'));
+    $('.name-process').html('Process name: <strong>' + $(e.relatedTarget).data('name') + '</strong>');
+});
     $('#tableOne').DataTable({
         paging: false,
         autoWidth: false,
@@ -84,6 +109,38 @@ window.onresize = function(event) {
 
 });
 </script>
+{% for message in messages %}
+{% if 'process_killed' in message.tags %}
+<script>
+	$.notify({
+		icon: 'las la-check-circle',
+		message: 'The process was killed correctly'
+	},{
+		type: 'success',
+		placement: {
+			from: "top",
+			align: "right"
+		},
+		time: 3000,
+	});
+</script>
+{% endif %}
+{% if 'error_killed' in message.tags %}
+<script>
+	$.notify({
+		icon: 'las la-exclamation-triangle',
+		message: 'An error occurred'
+	},{
+		type: 'danger',
+		placement: {
+			from: "top",
+			align: "right"
+		},
+		time: 3000,
+	});
+</script>
+{% endif %}
+{% endfor %}
 {% endblock %}
  
  

@@ -93,6 +93,9 @@ class Server_processes(models.Model):
             }
             listOfProcessNames.append(orderedDict)
         return sorted(listOfProcessNames, key=lambda k: k['cpu_percent'], reverse=True)
+    def kill_server_process(pid):
+        p = psutil.Process(pid)
+        p.terminate()
 
 class Server_connections(models.Model):
     def get_server_network_connections():
@@ -183,3 +186,8 @@ async def loop_logs():
         await get_logs_cpu()
         await get_logs_ram()
         await asyncio.sleep(60*30)
+
+
+
+
+
