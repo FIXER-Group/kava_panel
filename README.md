@@ -1,5 +1,5 @@
 # kava_panel
-![alt text](https://i.imgur.com/FtdndbN.jpg)
+![alt text](https://i.imgur.com/Q3ckJlJ.png)
 
 ## Setup
 
@@ -45,15 +45,15 @@ To get a token:
 
     HTTP/1.1 200 OK
     allow: GET, HEAD, OPTIONS
-    content-length: 304
+    content-length: 292
     content-type: application/json
-    date: Mon, 11 Jan 2021 21:24:08 GMT
+    date: Mon, 11 Jan 2021 21:51:02 GMT
     server: uvicorn
     vary: Accept
     x-content-type-options: nosniff
     x-frame-options: DENY
 
-    {"cpu_percent":20.5,"cpu_per_core":[20.0,17.2,20.3,20.3],"cpu_name":"AMD Athlon(tm) II X4 631 Quad-Core Processor","ram_percent":85.9,"ram_total":"4.0 GB","ram_usage":"3.43 GB","disk_percent":96.7,"disk_total":"921.66 GB","disk_usage":"891.37 GB","swap_percent":67.1,"swap_total":"10.25 GB","uptime":0.0}
+    {"cpu_percent":6.7,"cpu_per_core":[20.4,3.0,3.2,0.0,4.2,4.0],"cpu_name":"QEMU Virtual CPU version 2.5+","ram_percent":25.5,"ram_total":"31.37 GB","ram_usage":"7.71 GB","disk_percent":18.0,"disk_total":"182.03 GB","disk_usage":"32.68 GB","swap_percent":0.0,"swap_total":"4.0 GB","uptime":33.0}
 
 ## Get list of system info
 
@@ -67,15 +67,15 @@ To get a token:
 
     HTTP/1.1 200 OK
     allow: GET, HEAD, OPTIONS
-    content-length: 196
+    content-length: 190
     content-type: application/json
-    date: Mon, 11 Jan 2021 21:22:52 GMT
+    date: Mon, 11 Jan 2021 21:51:37 GMT
     server: uvicorn
     vary: Accept
     x-content-type-options: nosniff
     x-frame-options: DENY
 
-    {"name":"Windows","release":"10","version":"10.0.16299","architecture":"AMD64","hostname":"DESKTOP-M8J9S0I","ipadress":"95.49.16.98","processor":"AMD64 Family 18 Model 1 Stepping 0, AuthenticAMD"}
+    {"name":"Linux","release":"5.4.0-1028-kvm","version":"#29-Ubuntu SMP Thu Nov 26 06:52:24 UTC 2020","architecture":"x86_64","hostname":"androjus","ipadress":"x.x.x.x","processor":"x86_64"}
     
 ## Get list of processes
 
@@ -89,15 +89,15 @@ To get a token:
 
     HTTP/1.1 200 OK
     allow: GET, HEAD, OPTIONS
-    content-length: 15082
+    content-length: 9743
     content-type: application/json
-    date: Mon, 11 Jan 2021 21:25:33 GMT
+    date: Mon, 11 Jan 2021 21:52:27 GMT
     server: uvicorn
     vary: Accept
     x-content-type-options: nosniff
     x-frame-options: DENY
 
-    {"List":[{"pid":0,"name":"System Idle Process","cpu_percent":28.72,"memory_percent":0.0}...]}
+    {"List":[{"pid":5899,"name":"java","cpu_percent":3.32,"memory_percent":15.36},{"pid":1665,"name":"java","cpu_percent":0.81,"memory_percent":8.14}...]}
     
 ## Get list of network connections
 
@@ -111,12 +111,12 @@ To get a token:
 
     HTTP/1.1 200 OK
     allow: GET, HEAD, OPTIONS
-    content-length: 16957
+    content-length: 5719
     content-type: application/json
-    date: Mon, 11 Jan 2021 21:29:46 GMT
+    date: Mon, 11 Jan 2021 21:53:01 GMT
     server: uvicorn
     vary: Accept
     x-content-type-options: nosniff
     x-frame-options: DENY
 
-    {"List":[{"Protocol":"tcp","Local_address":"192.168.1.16:1128","Remote_address":"44.242.24.237:443","Status:":"ESTABLISHED","PID":11140,"Name":"chrome.exe"}...]}
+    {"List":[{"Protocol":"tcp6","Local_address":"::ffff:46.4.85.78:25565","Remote_address":"::ffff:77.252.45.76:49720","Status:":"TIME_WAIT","PID":"-","Name":"?"}...]}
