@@ -99,6 +99,28 @@ To get a token:
 
     {"List":[{"pid":5899,"name":"java","cpu_percent":3.32,"memory_percent":15.36},{"pid":1665,"name":"java","cpu_percent":0.81,"memory_percent":8.14}...]}
     
+## Kill process
+
+### Request
+
+`POST /panel/api/process`
+
+    curl http://your_vps_ip:8000/panel/api/process -d 'pid=2020'
+
+### Response
+
+    HTTP/1.1 400 Bad Request
+    allow: GET, POST, HEAD, OPTIONS
+    content-length: 5
+    content-type: application/json
+    date: Wed, 13 Jan 2021 23:23:54 GMT
+    server: uvicorn
+    vary: Accept
+    x-content-type-options: nosniff
+    x-frame-options: DENY
+
+    false
+
 ## Get list of network connections
 
 ### Request
