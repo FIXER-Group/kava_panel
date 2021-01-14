@@ -4,6 +4,9 @@ import psutil
 import cpuinfo
 import time
 import socket
+import threading
+import platform
+import subprocess
 from socket import AF_INET, SOCK_STREAM, SOCK_DGRAM
 from datetime import datetime
 import asyncio
@@ -79,6 +82,11 @@ class Server_stat(models.Model):
 
     def uptime_days():
         return (time.time() - psutil.boot_time())//(60*60*24)
+    def reboot_system():
+        if platform.system() == 'Windows':
+            subprocess.call(["shutdown", "/r"])
+        elif platform.system() == 'Linux':
+            subprocess.run(["sudo", "shutdown", "-r", "+1"])
 
 class Server_processes(models.Model):
     def get_server_processes():
@@ -132,14 +140,14 @@ class Server_connection_speed(models.Model):
     def network_usage():
         upload = psutil.net_io_counters()[0]
         download = psutil.net_io_counters()[1]
-        time.sleep(1);
+        threading.Event().wait(1)
         upload2 = psutil.net_io_counters()[0]
         download2 = psutil.net_io_counters()[1]
         size_bytes = (upload2 - upload)
         size_bytes2 = (download2 - download)
         size_name = ("B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
         if size_bytes == 0:
-            upload_return =  "0B"
+            upload_return = "0B"
         else:
             i = int(math.floor(math.log(size_bytes, 1024)))
             p = math.pow(1024, i)

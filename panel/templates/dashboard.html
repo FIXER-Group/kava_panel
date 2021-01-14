@@ -182,8 +182,11 @@
               <p>(The page will freeze and may need to be refreshed)</p>        
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-danger"><i class="las la-power-off"></i> Reboot</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <form action="{% url 'panel:index' %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger"><i class="las la-power-off"></i> Reboot</button>
+                </form>
             </div>
           </div>
         </div>
