@@ -137,27 +137,18 @@ To get a token:
 
     false
 
-## Get list of network connections
+## Reboot machine
 
 ### Request
 
-`GET /panel/api/network`
+`GET /panel/api/reboot`
 
-    curl http://your_vps_ip:8000/panel/api/network
+    curl http://your_vps_ip:8000/panel/api/reboot
 
 ### Response
 
-    HTTP/1.1 200 OK
-    allow: GET, HEAD, OPTIONS
-    content-length: 5719
-    content-type: application/json
-    date: Mon, 11 Jan 2021 21:53:01 GMT
-    server: uvicorn
-    vary: Accept
-    x-content-type-options: nosniff
-    x-frame-options: DENY
+`true`
 
-    {"List":[{"Protocol":"tcp6","Local_address":"::ffff:46.4.85.78:25565","Remote_address":"::ffff:77.252.45.76:49720","Status:":"TIME_WAIT","PID":"-","Name":"?"}...]}
 ## Technologies used in project:
 * [Python3](https://www.python.org/)
 * [Bootstarp4](https://www.themekita.com/ready-bootstrap-dashboard.html)
