@@ -177,7 +177,7 @@ class ProcessListAPIView(APIView):
             Server_processes.kill_server_process(int(request.data.get("pid")))
             return Response(True, status=status.HTTP_200_OK)
         except:
-            return Response(False, status=status.HTTP_400_BAD_REQUEST)
+            return Response(False, status=status.HTTP_202_ACCEPTED)
 
 class NetworkListAPIView(APIView):
     permission_classes = (IsAuthenticated,)
