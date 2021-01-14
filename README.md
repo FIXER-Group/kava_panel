@@ -141,7 +141,7 @@ To get a token:
 
 ### Request
 
-`GET /panel/api/reboot`
+`POST /panel/api/reboot`
 
     curl http://your_vps_ip:8000/panel/api/reboot
 
