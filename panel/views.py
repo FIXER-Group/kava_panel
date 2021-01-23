@@ -4,7 +4,7 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import SetPasswordForm
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
-from .models import Server_stat, CPULogs, RAMLogs,Server_processes,Server_connections,Server_connection_speed
+from .models import Server_stat, CPULogs, RAMLogs,Server_processes,Server_connections,Server_connection_speed, Webs
 from django.contrib import messages
 from chartjs.views.lines import BaseLineChartView
 import socket
@@ -59,7 +59,7 @@ def network(request):
 
 @login_required(login_url='/')
 def webs(request):
-    return render(request, 'webs.html')
+    return render(request, 'webs.html', {'List_webs': Webs.ngnix_reader()})
 
 @login_required(login_url='/')
 def system(request):

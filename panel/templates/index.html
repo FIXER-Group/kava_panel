@@ -67,6 +67,7 @@
                     </div>
                 </div>
             </div>
+            {% load stats %}
             <ul class="nav">
                 <li class="nav-item {% if request.resolver_match.url_name == 'index' %}active{% endif %}">
                     <a href="{% url 'panel:index' %}">
@@ -78,6 +79,7 @@
                     <a href="{% url 'panel:webs' %}">
                         <i class="la la-globe"></i>
                         <p>Webs</p>
+                        <span class="badge badge-count">{%counts_webs%}</span>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -102,7 +104,6 @@
                     <a href="{% url 'panel:process' %}">
                         <i class="la la-cogs"></i>
                         <p>Processes</p>
-                        {% load stats %}
                         <span class="badge badge-count">{%counts_process%}</span>
                     </a>
                 </li>

@@ -1,6 +1,6 @@
 from django.urls import path
 from panel import views
-from .models import loop_logs
+from .models import AutoLogs
 from django_simple_task import defer
 from django.contrib.auth.forms import AdminPasswordChangeForm
 import datetime
@@ -25,4 +25,4 @@ urlpatterns = [
     path('api/network', views.NetworkListAPIView.as_view(), name='networkapi'),
 ]
 
-defer(loop_logs)
+defer(AutoLogs.loop_logs)

@@ -8,12 +8,38 @@ from socket import AF_INET, SOCK_STREAM, SOCK_DGRAM
 from datetime import datetime
 import asyncio
 from asgiref.sync import sync_to_async
+import glob
+import os
 
+
+
+class Webs(models.Model):
+    def ngnix_reader():
+        path = '/etc/nginx/sites-available' #for test only
+        webs_list = list()
+        for filepath in glob.glob(os.path.join(path, '*')):
+            with open(filepath) as f:
+                domians = ""
+                cur_path =" s"
+                content = f.read()
+                for line in content.splitlines():
+                    if 'server_name' in line:
+                        domians = line.split('server_name ',1)[1][:-1]
+                    if 'root' in line:
+                        cur_path = line.split('root ',1)[1][:-1]
+                    if domians != "" and cur_path != "":
+                        ngnixDict = {
+                            "domian": domians,
+                            "path": cur_path
+                            }
+                        webs_list.append(ngnixDict)
+                        break
+        return webs_list
+                
 
 
 
 class Server_stat(models.Model):
-
     def cpu_percent(percore=False):
         return psutil.cpu_percent(interval=1, percpu=percore)
 
@@ -170,7 +196,6 @@ class RAMLogs(models.Model):
     date = models.CharField(max_length=30, default=datetime.today().strftime("%d %b %Y %H:%M:%S"))
     usage = models.FloatField(default=Server_stat.ram_percent)
 
-
 @sync_to_async
 def get_logs_cpu():
     logcpu = CPULogs(date=datetime.today().strftime("%d %b %Y %H:%M:%S"))
@@ -181,11 +206,12 @@ def get_logs_ram():
     logram = RAMLogs(date=datetime.today().strftime("%d %b %Y %H:%M:%S"))
     logram.save()
 
-async def loop_logs():
-    while True:
-        await get_logs_cpu()
-        await get_logs_ram()
-        await asyncio.sleep(60*30)
+class AutoLogs(models.Model):
+    async def loop_logs():
+        while True:
+            await get_logs_cpu()
+            await get_logs_ram()
+            await asyncio.sleep(60*30)
 
 
 
