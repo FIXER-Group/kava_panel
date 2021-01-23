@@ -23,6 +23,7 @@ urlpatterns = [
     path('api/system', views.SystemAPIView.as_view(), name='systemapi'),
     path('api/process', views.ProcessListAPIView.as_view(), name='processapi'),
     path('api/network', views.NetworkListAPIView.as_view(), name='networkapi'),
+    path('api/reboot', views.SystemRebootAPIView.as_view(), name='rebootapi'),
 ]
 
 defer(AutoLogs.loop_logs)

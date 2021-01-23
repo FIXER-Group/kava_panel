@@ -1,9 +1,19 @@
 # kava_panel
 ![alt text](https://i.imgur.com/Q3ckJlJ.png)
 
+## Table of contents
+* [Requirements](#requirements)
+* [Setup](#setup)
+* [REST API](#REST-API)
+* [Technologies](#technologies-used-in-project)
+## Requirements
+* Python 3.7
+* Mongodb
 ## Setup
 
-The first thing to do is to clone the repository:
+Remember to install mongodb server
+
+First time setup
 
 ```sh
 git clone https://github.com/androjus/kava_panel.git
@@ -12,12 +22,18 @@ git clone https://github.com/androjus/kava_panel.git
 Then install the dependencies:
 
 ```sh
+cd kava_panel
 sudo pip install -r requirements.txt
 ```
 
 Once `pip` has finished downloading the dependencies:
 ```sh
-cd kava_panel
+python manage.py makemigrations
+python manage.py migrate
+python manage.py createsuperuser
+```
+To run app use this command
+```sh
 uvicorn kava.asgi:application --host 0.0.0.0
 ```
 And navigate to `http://your_vps_ip:8000/`.
@@ -121,24 +137,25 @@ To get a token:
 
     false
 
-## Get list of network connections
+## Reboot machine
 
 ### Request
 
-`GET /panel/api/network`
+`POST /panel/api/reboot`
 
-    curl http://your_vps_ip:8000/panel/api/network
+    curl http://your_vps_ip:8000/panel/api/reboot
 
 ### Response
 
-    HTTP/1.1 200 OK
-    allow: GET, HEAD, OPTIONS
-    content-length: 5719
-    content-type: application/json
-    date: Mon, 11 Jan 2021 21:53:01 GMT
-    server: uvicorn
-    vary: Accept
-    x-content-type-options: nosniff
-    x-frame-options: DENY
+`true`
 
-    {"List":[{"Protocol":"tcp6","Local_address":"::ffff:46.4.85.78:25565","Remote_address":"::ffff:77.252.45.76:49720","Status:":"TIME_WAIT","PID":"-","Name":"?"}...]}
+## Technologies used in project:
+* [Python3](https://www.python.org/)
+* [Bootstarp4](https://www.themekita.com/ready-bootstrap-dashboard.html)
+* [Chartjs](https://www.chartjs.org/)
+* [Django 3.0.5](https://www.djangoproject.com/)
+* [Django rest framework](https://www.django-rest-framework.org/)
+* [Datatables](https://datatables.net/)
+* [Line awesome icons](https://icons8.com/line-awesome)
+* [Uvicorn](https://www.uvicorn.org/)
+* [Whitenoise](http://whitenoise.evans.io/en/stable/)

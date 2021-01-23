@@ -22,6 +22,8 @@ from rest_framework import status
 @login_required(login_url='/')
 
 def index(request):
+    if request.method == "POST":
+        Server_stat.reboot_system()
     return render(request, 'dashboard.html')
 
 def logout_view(request):
@@ -92,7 +94,6 @@ def stats_update(request):
                 }
      return JsonResponse(results)
 
-
 class LineChartCpu(BaseLineChartView):
     def __init__(self):
         self.now = datetime.datetime.now()
@@ -147,7 +148,8 @@ class StatsAPIView(APIView):
                 'disk_usage': Server_stat.disk_usage(),
                 'swap_percent': Server_stat.swap_percent(),
                 'swap_total': Server_stat.swap_total(),
-                'uptime': Server_stat.uptime_days()}
+                'uptime': Server_stat.uptime_days(),
+                }
         return Response(content)
 
 class SystemAPIView(APIView):
@@ -175,7 +177,7 @@ class ProcessListAPIView(APIView):
             Server_processes.kill_server_process(int(request.data.get("pid")))
             return Response(True, status=status.HTTP_200_OK)
         except:
-            return Response(False, status=status.HTTP_400_BAD_REQUEST)
+            return Response(False, status=status.HTTP_202_ACCEPTED)
 
 class NetworkListAPIView(APIView):
     permission_classes = (IsAuthenticated,)
@@ -183,4 +185,11 @@ class NetworkListAPIView(APIView):
     def get(self, request):
         content = {'List': Server_connections.get_server_network_connections()}
         return Response(content)
+
+class SystemRebootAPIView(APIView):
+    permission_classes = (IsAuthenticated,)
+    def post(self,request):
+        Server_stat.reboot_system()
+        return Response(True, status=status.HTTP_200_OK)
+
 
