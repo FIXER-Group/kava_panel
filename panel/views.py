@@ -62,6 +62,11 @@ def network(request):
 
 @login_required(login_url='/')
 def webs(request):
+    if request.method == "POST":
+        if request.POST.get('active') == "true":
+            Webs.trun_off(request.POST.get('path'))
+        else:
+            Webs.trun_on(request.POST.get('path'))
     return render(request, 'webs.html', {'List_webs': Webs.ngnix_reader()})
 
 @login_required(login_url='/')

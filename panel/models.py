@@ -18,10 +18,11 @@ import os
 
 class Webs(models.Model):
     def ngnix_reader():
-        path = '/etc/nginx/sites-available/' 
+        path = '/etc/nginx/sites-available' 
         path_av = '/etc/nginx/sites-enabled'
         webs_list = list()
         for filepath in glob.glob(os.path.join(path, '*')):
+            print(path_av + filepath.replace(path, ""))
             with open(filepath) as f:
                 exist_status = ""
                 if os.path.exists(path_av + filepath.replace(path, "")) and os.path.islink(path_av + filepath.replace(path, "")):
@@ -40,12 +41,23 @@ class Webs(models.Model):
                         ngnixDict = {
                             "domian": domians,
                             "path": cur_path,
-                            "exist": exist_status
+                            "exist": exist_status,
+                            "path_on": str(filepath)
                             }
                         webs_list.append(ngnixDict)
                         break
         return webs_list
-                
+    
+    def trun_off(path_f):
+        path = '/etc/nginx/sites-available' 
+        path_av = '/etc/nginx/sites-enabled'
+        os.unlink(path_av + path_f.replace(path, ""))
+        os.system("sudo systemctl restart nginx")
+    def trun_on(path_f):
+        path = '/etc/nginx/sites-available' 
+        path_av = '/etc/nginx/sites-enabled'
+        os.symlink(path_f, path_av + path_f.replace(path, ""))
+        os.system("sudo systemctl restart nginx")
 
 
 
