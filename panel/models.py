@@ -18,8 +18,8 @@ import os
 
 class Webs(models.Model):
     def ngnix_reader():
-        path = '/etc/nginx/sites-enabled' #for test only
-        path_av = '/etc/nginx/sites-available/'
+        path = '/etc/nginx/sites-available/' 
+        path_av = '/etc/nginx/sites-enabled'
         webs_list = list()
         for filepath in glob.glob(os.path.join(path, '*')):
             with open(filepath) as f:
