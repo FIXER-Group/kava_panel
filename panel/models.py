@@ -19,11 +19,16 @@ import os
 class Webs(models.Model):
     def ngnix_reader():
         path = '/etc/nginx/sites-enabled' #for test only
+        path_av = '/etc/nginx/sites-available/'
         webs_list = list()
         for filepath in glob.glob(os.path.join(path, '*')):
             with open(filepath) as f:
+                if os.path.exists(path_av+f) and os.path.islink(path_av+f):
+                    exist_status = True
+                else:
+                    exist_status = False
                 domians = ""
-                cur_path =" s"
+                cur_path =""
                 content = f.read()
                 for line in content.splitlines():
                     if 'server_name' in line:
@@ -33,7 +38,8 @@ class Webs(models.Model):
                     if domians != "" and cur_path != "":
                         ngnixDict = {
                             "domian": domians,
-                            "path": cur_path
+                            "path": cur_path,
+                            "exist": exist_status
                             }
                         webs_list.append(ngnixDict)
                         break
