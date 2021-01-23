@@ -2,6 +2,8 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import SetPasswordForm
+from django.views.decorators.cache import cache_page 
+from django.utils.decorators import method_decorator   
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from .models import Server_stat, CPULogs, RAMLogs,Server_processes,Server_connections,Server_connection_speed, Webs
@@ -20,7 +22,6 @@ from rest_framework import status
 
 
 @login_required(login_url='/')
-
 def index(request):
     if request.method == "POST":
         Server_stat.reboot_system()
