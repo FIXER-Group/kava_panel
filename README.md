@@ -16,7 +16,7 @@ Remember to install mongodb server
 First time setup
 
 ```sh
-git clone https://github.com/androjus/kava_panel.git
+git clone https://github.com/FIXER-Group/kava_panel.git
 ```
 
 Then install the dependencies:
@@ -34,7 +34,7 @@ python manage.py createsuperuser
 ```
 To run app use this command
 ```sh
-uvicorn kava.asgi:application --host 0.0.0.0
+sudo uvicorn kava.asgi:application --host 0.0.0.0
 ```
 And navigate to `http://your_vps_ip:8000/`.
 
