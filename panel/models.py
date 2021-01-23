@@ -23,7 +23,8 @@ class Webs(models.Model):
         webs_list = list()
         for filepath in glob.glob(os.path.join(path, '*')):
             with open(filepath) as f:
-                if os.path.exists(path_av+f) and os.path.islink(path_av+f):
+                exist_status = ""
+                if os.path.exists(path_av + filepath.replace(path, "")) and os.path.islink(path_av + filepath.replace(path, "")):
                     exist_status = True
                 else:
                     exist_status = False
