@@ -27,17 +27,19 @@
                                     {% elif value == True or value == False %}
                                         <td>{% if value == True %}<span class="text-success">Active</span>{% else %}<span class="text-danger">Disable</span>{% endif %}</td>
                                     {% elif forloop.last %}
-                                        <td>
+                                        <td class="text-center">
                                             <form method="POST" action="{% url 'panel:webs' %}">
                                                 {% csrf_token %}
                                             {%if dict|get_item:"exist" == True%}
                                             <input name="active" type="hidden" value="true">
                                             <input name="path" type="hidden" value="{{ value }}">
-                                            <button type="submit" class="btn btn-danger">Disable</button>
+                                            <button type="submit" class="btn btn-danger btn-xs-block">Disable</button>
                                             {% else %}
                                             <input name="active" type="hidden" value="false">
                                             <input name="path" type="hidden" value="{{ value }}">
-                                            <button type="submit" class="btn btn-success">Enable</button>{% endif %} <button type="button" class="btn btn-success"><i class="las la-edit"></i> Edit</button> <button type="button" class="btn btn-danger"><i class="las la-times"></i> Delete</button></td>    
+                                            <button type="submit" class="btn btn-success btn-xs-block">Enable</button>{% endif %} <button type="button" class="btn btn-success btn-xs-block"><i class="las la-edit"></i> Edit</button> <button type="button" class="btn btn-danger btn-xs-block"><i class="las la-times"></i> Delete</button>
+                                            </form>
+                                        </td>    
                                     {% else %}
                                         <td>{{ value }}</td>
                                     {% endif %}
@@ -94,6 +96,38 @@ window.onresize = function(event) {
 
 });
 </script>
+{% for message in messages %}
+{% if 'webs_info' in message.tags %}
+<script>
+	$.notify({
+		icon: 'las la-check-circle',
+		message: '{{message.webs_info|striptags}} '
+	},{
+		type: 'success',
+		placement: {
+			from: "top",
+			align: "right"
+		},
+		time: 3000,
+	});
+</script>
+{% endif %}
+{% if 'web_error' in message.tags %}
+<script>
+	$.notify({
+		icon: 'las la-exclamation-triangle',
+		message: 'An error occurred'
+	},{
+		type: 'danger',
+		placement: {
+			from: "top",
+			align: "right"
+		},
+		time: 3000,
+	});
+</script>
+{% endif %}
+{% endfor %}
 {% endblock %}
  
  

@@ -30,7 +30,7 @@
                                         <td>{{ value }}</td>
                                     {% endif %}
                                 {% endfor %}
-                                <td><button type="button" class="btn btn-danger" data-toggle="modal" data-pid="{{ dict|get_item:"pid" }}" data-name="{{ dict|get_item:"name" }}" data-target="#confirm-kill"><i class="las la-times"></i> KILL</button></td>
+                                <td class="text-center"><button type="button" class="btn btn-danger btn-xs-block" data-toggle="modal" data-pid="{{ dict|get_item:"pid" }}" data-name="{{ dict|get_item:"name" }}" data-target="#confirm-kill"><i class="las la-times"></i> KILL</button></td>
                             </tr>
                         {% endfor %}
                         </tbody>

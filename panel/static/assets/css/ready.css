@@ -5461,6 +5461,12 @@ body {
 .input-fixed {
   width: 200px;
 }
+@media (max-width: 768px) {
+  .btn-xs-block {
+      width:100%;
+      margin-bottom: 5px;
+  }
+}
 .form-control:disabled, .form-control[readonly] {
   background: #0e1015 !important;
   border: none;

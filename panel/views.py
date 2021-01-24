@@ -64,9 +64,17 @@ def network(request):
 def webs(request):
     if request.method == "POST":
         if request.POST.get('active') == "true":
-            Webs.trun_off(request.POST.get('path'))
+            try:
+                Webs.trun_off(request.POST.get('path'))
+                messages.info(request, 'Site was disabled successfully', extra_tags='webs_info')
+            except:
+                messages.info(request, 'error_killed', extra_tags='web_error')
         else:
-            Webs.trun_on(request.POST.get('path'))
+            try:
+                Webs.trun_on(request.POST.get('path'))
+                messages.info(request, 'Site was enabled successfully', extra_tags='webs_info')
+            except:
+                messages.info(request, 'error_killed', extra_tags='web_error')
     return render(request, 'webs.html', {'List_webs': Webs.ngnix_reader()})
 
 @login_required(login_url='/')

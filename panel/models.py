@@ -17,15 +17,15 @@ import os
 
 
 class Webs(models.Model):
+    path = '/etc/nginx/sites-available' 
+    path_av = '/etc/nginx/sites-enabled'
+
     def ngnix_reader():
-        path = '/etc/nginx/sites-available' 
-        path_av = '/etc/nginx/sites-enabled'
         webs_list = list()
-        for filepath in glob.glob(os.path.join(path, '*')):
-            print(path_av + filepath.replace(path, ""))
+        for filepath in glob.glob(os.path.join(Webs.path, '*')):
             with open(filepath) as f:
                 exist_status = ""
-                if os.path.exists(path_av + filepath.replace(path, "")) and os.path.islink(path_av + filepath.replace(path, "")):
+                if os.path.exists(Webs.path_av + filepath.replace(Webs.path, "")) and os.path.islink(Webs.path_av + filepath.replace(Webs.path, "")):
                     exist_status = True
                 else:
                     exist_status = False
@@ -49,14 +49,11 @@ class Webs(models.Model):
         return webs_list
     
     def trun_off(path_f):
-        path = '/etc/nginx/sites-available' 
-        path_av = '/etc/nginx/sites-enabled'
-        os.unlink(path_av + path_f.replace(path, ""))
+        os.unlink(Webs.path_av + path_f.replace(Webs.path, ""))
         os.system("sudo systemctl restart nginx")
+        
     def trun_on(path_f):
-        path = '/etc/nginx/sites-available' 
-        path_av = '/etc/nginx/sites-enabled'
-        os.symlink(path_f, path_av + path_f.replace(path, ""))
+        os.symlink(path_f, Webs.path_av + path_f.replace(Webs.path, ""))
         os.system("sudo systemctl restart nginx")
 
 
