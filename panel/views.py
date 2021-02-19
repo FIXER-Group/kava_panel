@@ -63,18 +63,25 @@ def network(request):
 @login_required(login_url='/')
 def webs(request):
     if request.method == "POST":
-        if request.POST.get('active') == "true":
+        if request.POST.get('del-website') == "true":
             try:
-                Webs.trun_off(request.POST.get('path'))
-                messages.info(request, 'Site was disabled successfully', extra_tags='webs_info')
+                Webs.delete_site(request.POST.get('path'))
+                messages.info(request, 'Site was deleted successfully', extra_tags='webs_info')
             except:
                 messages.info(request, 'error_killed', extra_tags='web_error')
         else:
-            try:
-                Webs.trun_on(request.POST.get('path'))
-                messages.info(request, 'Site was enabled successfully', extra_tags='webs_info')
-            except:
-                messages.info(request, 'error_killed', extra_tags='web_error')
+            if request.POST.get('active') == "true":
+                try:
+                    Webs.trun_off(request.POST.get('path'))
+                    messages.info(request, 'Site was disabled successfully', extra_tags='webs_info')
+                except:
+                    messages.info(request, 'error_killed', extra_tags='web_error')
+            else:
+                try:
+                    Webs.trun_on(request.POST.get('path'))
+                    messages.info(request, 'Site was enabled successfully', extra_tags='webs_info')
+                except:
+                    messages.info(request, 'error_killed', extra_tags='web_error')
     return render(request, 'webs.html', {'List_webs': Webs.ngnix_reader()})
 
 @login_required(login_url='/')

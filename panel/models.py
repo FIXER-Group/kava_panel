@@ -55,6 +55,12 @@ class Webs(models.Model):
     def trun_on(path_f):
         os.symlink(path_f, Webs.path_av + path_f.replace(Webs.path, ""))
         os.system("sudo systemctl restart nginx")
+    
+    def delete_site(path_f):
+        if os.path.exists(Webs.path_av + path_f.replace(Webs.path, "")) and os.path.islink(Webs.path_av + path_f.replace(Webs.path, "")):
+            os.unlink(Webs.path_av + path_f.replace(Webs.path, ""))
+        os.remove(path_f)
+        os.system("sudo systemctl restart nginx")
 
 
 
