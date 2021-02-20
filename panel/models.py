@@ -56,11 +56,28 @@ class Webs(models.Model):
         os.symlink(path_f, Webs.path_av + path_f.replace(Webs.path, ""))
         os.system("sudo systemctl restart nginx")
     
-    def delete_site(path_f):
+    def delete_site(path_f,path_d,del_dic=False):
         if os.path.exists(Webs.path_av + path_f.replace(Webs.path, "")) and os.path.islink(Webs.path_av + path_f.replace(Webs.path, "")):
             os.unlink(Webs.path_av + path_f.replace(Webs.path, ""))
         os.remove(path_f)
         os.system("sudo systemctl restart nginx")
+        if del_dic is True:
+            os.system("rm -r " + path_d.replace("/html", ""))
+
+    def add_site(domian):
+        os.system("cp panel/static/default " + Webs.path + "/" + domian)
+        config_file = open(Webs.path + "/" + domian)
+        strings_list = config_file.readlines()
+        strings_list[4] = "\tserver_name " + domian + " www." + domian + ";"
+        strings_list[6] = "\troot /var/www/" + domian + "/html;"
+        config_file = open(Webs.path + "/" + domian, "w")
+        config_file.write("".join(strings_list))
+        config_file.close()
+        os.system("sudo mkdir /var/www/" + domian)
+        os.system("sudo mkdir /var/www/" + domian + "/html")
+        
+
+
 
 
 

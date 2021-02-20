@@ -65,8 +65,14 @@ def webs(request):
     if request.method == "POST":
         if request.POST.get('del-website') == "true":
             try:
-                Webs.delete_site(request.POST.get('path'))
+                Webs.delete_site(request.POST.get('path'),request.POST.get('path-d'),True if request.POST.get('del_directory') == "True" else False)
                 messages.info(request, 'Site was deleted successfully', extra_tags='webs_info')
+            except:
+                messages.info(request, 'error_killed', extra_tags='web_error')
+        elif request.POST.get('add-website') == "true":
+            try:
+                Webs.add_site(request.POST.get('domian'))
+                messages.info(request, 'Site was added successfully', extra_tags='webs_info')
             except:
                 messages.info(request, 'error_killed', extra_tags='web_error')
         else:

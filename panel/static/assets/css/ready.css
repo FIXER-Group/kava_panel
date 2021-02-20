@@ -5271,10 +5271,6 @@ body {
   border-color: #ccc !important;
 }
 
-[type="checkbox"]:not(:checked), [type="checkbox"]:checked {
-  position: absolute;
-  left: -9999px;
-}
 [type="checkbox"]:not(:checked) + .form-check-sign, [type="checkbox"]:checked + .form-check-sign {
   position: relative;
   padding-left: 1.65em;
@@ -5489,6 +5485,17 @@ input[type=password] {
   display: inline-block;
   font-size: 16px;
   margin: 5px;
+  outline: none !important;
+}
+input[type=text] {
+  background-color: #0e1015;
+  border: none;
+  color: #adadad;
+  padding: 15px 32px;
+  width:100%;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
   outline: none !important;
 }
 input[type=search] {

@@ -5,7 +5,7 @@
 {% block content %}
 <div class="content">
     <div class="container-fluid">
-        <h4 class="page-title">Webs <button class="btn btn-success pull-right">Add new website</button></h4>
+        <h4 class="page-title">Webs <button class="btn btn-success pull-right" data-toggle="modal" data-target="#add-website">Add new website</button></h4>
         <div class="row table-striped">
             <div class="col">
             <div class="card">
@@ -37,7 +37,7 @@
                                             {% else %}
                                             <input name="active" type="hidden" value="false">
                                             <input name="path" type="hidden" value="{{ value }}">
-                                            <button type="submit" class="btn btn-success btn-xs-block">Enable</button>{% endif %} <button type="button" class="btn btn-success btn-xs-block"><i class="las la-edit"></i> Edit</button> <button type="button" class="btn btn-danger btn-xs-block" data-toggle="modal" data-path="{{ dict|get_item:"path_on" }}" data-name="{{ dict|get_item:"domian" }}" data-target="#confirm-delete"><i class="las la-times"></i> Delete</button>
+                                            <button type="submit" class="btn btn-success btn-xs-block">Enable</button>{% endif %} <button type="button" class="btn btn-success btn-xs-block"><i class="las la-edit"></i> Edit</button> <button type="button" class="btn btn-danger btn-xs-block" data-toggle="modal" data-path="{{ dict|get_item:"path_on" }}" data-path-d="{{ dict|get_item:"path" }}" data-name="{{ dict|get_item:"domian" }}" data-target="#confirm-delete"><i class="las la-times"></i> Delete</button>
                                             </form>
                                         </td>    
                                     {% else %}
@@ -61,15 +61,46 @@
         </div>
         <div class="modal-body">
           <p>Are you sure you want to delete this website?</p>
-          <p class="name-website"></p>       
+          <p class="name-website"></p>
+          <form method="POST" action="{% url 'panel:webs' %}">
+            {% csrf_token %}
+          <div class="form-check p-3">
+            <input class="form-check-input" name="del_directory" type="checkbox" checked="checked" value="True" id="Check1">
+            <label class="form-check-label" for="Check1">
+                Delete with a directory
+            </label>
+            </div>
         </div>
         <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <form method="POST" action="{% url 'panel:webs' %}">
-            {% csrf_token %}
             <input class="path-class" name="path" type="hidden">
+            <input class="path-d-class" name="path-d" type="hidden">
             <input name="del-website" type="hidden" value="true">
           <button type="submit" class="btn btn-danger"><i class="las la-times"></i> Delete</button>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="add-website" tabindex="-1" role="dialog" aria-labelledby="reboot" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Add new website</h5>
+        </div>
+        <div class="modal-body">
+          <p>Enter the domain you want to add (without www and http):</p>
+          <form method="POST" action="{% url 'panel:webs' %}">
+            {% csrf_token %}
+        <div class="form-group">
+            <input class="form-control" type="text" name="domian" placeholder="example.com" required>
+            <input name="add-website" type="hidden" value="true">     
+        </div> 
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-success">Add website</button>
         </form>
         </div>
       </div>
@@ -87,6 +118,7 @@ $(document).ready(function() {
     });
     $('#confirm-delete').on('show.bs.modal', function(e) {
     $(this).find('.path-class').attr('value', $(e.relatedTarget).data('path'));
+    $(this).find('.path-d-class').attr('value', $(e.relatedTarget).data('path-d'));
     $('.name-website').html('Website: <strong>' + $(e.relatedTarget).data('name') + '</strong>');
     });
 $('.table-responsive-stack').each(function (i) {
