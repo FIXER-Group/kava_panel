@@ -1,0 +1,89 @@
+{% extends "index.html" %}
+{% block title %}
+    Users
+{% endblock %}
+{% block content %}
+<div class="content">
+    <div class="container-fluid">
+        <h4 class="page-title">Users        <button class="btn btn-success pull-right" data-toggle="modal" data-target="#add-website">Add new user</button></h4>
+        <div class="row table-striped">
+            <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table table-responsive-stack" id="tableOne">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="th_show Name">Name</th>
+                                <th scope="col" class="th_show UID">UID</th>
+                                <th scope="col" class="th_show GID">GID</th>
+                                <th scope="col" class="th_show Dir">Dir</th>
+                                <th scope="col" class="th_show Shell">Shell</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {%  for dict in List %}
+                            <tr>
+                                {% for value in dict.values %}
+                                    {% if forloop.first %}
+                                        <td scope="row">{{ value }}</td>
+                                    {% else %}
+                                        <td>{{ value }}</td>
+                                    {% endif %}
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+{% endblock %}
+{% block javascript %}
+<script>
+$(document).ready(function() {
+    $('#tableOne').DataTable({
+        paging: false,
+        autoWidth: false,
+        fixedColumns: true,
+        columnDefs: [{ width: 50, targets: 0 }],
+    });
+$('.table-responsive-stack').each(function (i) {
+   var id = $(this).attr('id');
+   $(this).find(".th_show").each(function(i) {
+      $('#'+id + ' td:nth-child(' + (i + 1) + ')').prepend('<span class="table-responsive-stack-thead"><b>'+$(this).text()+'<b>:</span> ');
+      $('.table-responsive-stack-thead').hide();
+   });
+});
+$( '.table-responsive-stack' ).each(function() {
+var thCount = $(this).find("th").length;
+var rowGrow = 100 / thCount + '%';
+$(this).find("th, td").css('flex-basis', rowGrow);
+});
+function flexTable(){
+if ($(window).width() < 768) {
+$(".table-responsive-stack").each(function (i) {
+   $(this).find(".table-responsive-stack-thead").show();
+   $(this).find('thead').hide();
+});
+
+} else {
+$(".table-responsive-stack").each(function (i) {
+   $(this).find(".table-responsive-stack-thead").hide();
+   $(this).find('thead').show();
+});
+   }
+}
+flexTable();
+window.onresize = function(event) {
+ flexTable();
+};
+
+});
+
+</script>
+{% endblock %}
+ 
+ 

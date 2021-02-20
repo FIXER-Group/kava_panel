@@ -6,7 +6,7 @@ from django.views.decorators.cache import cache_page
 from django.utils.decorators import method_decorator   
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
-from .models import Server_stat, CPULogs, RAMLogs,Server_processes,Server_connections,Server_connection_speed, Webs
+from .models import Server_stat, CPULogs, RAMLogs,Server_processes,Server_connections,Server_connection_speed, Webs,Users
 from django.contrib import messages
 from chartjs.views.lines import BaseLineChartView
 import socket
@@ -101,7 +101,10 @@ def system(request):
                   'IpAdress': requests.get('https://checkip.amazonaws.com').text.strip(),
                   'Processor': platform.processor()}
                   )
-                  
+@login_required(login_url='/')
+def users(request):
+    return render(request, 'users.html',{'List':Users.list_of_all_users()})
+
 @login_required(login_url='/')
 def stats_update(request):
      results = {'cpu_percent': Server_stat.cpu_percent(),

@@ -12,8 +12,8 @@ from datetime import datetime
 import asyncio
 from asgiref.sync import sync_to_async
 import glob
-import os
-
+import os,sys
+import pwd
 
 
 class Webs(models.Model):
@@ -76,9 +76,25 @@ class Webs(models.Model):
         os.system("sudo mkdir /var/www/" + domian)
         os.system("sudo mkdir /var/www/" + domian + "/html")
         
-
-
-
+class Users(models.Model):
+    def list_of_all_users():
+        users = pwd.getpwall()
+        list_of_users=list()
+        for user in users:
+            dict = {
+                'name': user[0],
+                'uid': user[2],
+                'gid': user[3],
+                'dir': user[5],
+                'shell': user[6],
+            }
+            list_of_users.append(dict)
+        return list_of_users
+    def create_new_user(username,password):
+        try:
+            subprocess.run(['useradd', '-p', password, username])
+        except:
+            sys.exit(1)
 
 
 class Server_stat(models.Model):

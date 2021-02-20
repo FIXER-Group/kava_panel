@@ -17,6 +17,7 @@ urlpatterns = [
     path('system/', views.system, name='system'),
     path('edit-profile/', views.edit_profile, name='edit_profile'),
     path('webs/', views.webs, name='webs'),
+    path('users/', views.users, name='users'),
     path('json/chartcpu', views.LineChartCpu.as_view(), name='chartcpu'),
     path('json/chartram', views.LineChartRam.as_view(), name='chartram'),
     path('json/stats_update', cache_page(15)(views.stats_update), name='stats_update'),
