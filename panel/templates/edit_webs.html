@@ -7,7 +7,7 @@
     <div class="container-fluid">
         <form class="d-inline" method="POST" action="{% url 'panel:webs_edit' %}">
             {% csrf_token %}
-        <h4 class="page-title">Edit website: {{ name }} <button type="submit" class="btn btn-success pull-right" data-toggle="modal" data-target="#add-website">Save website</button></h4>
+        <h4 class="page-title">Edit website: {{ name }} <button type="submit" class="btn btn-success pull-right btn-xs-block" data-toggle="modal" data-target="#add-website">Save website</button></h4>
         <div class="row">
             <div class="col-md-12">
                 <div class="card">

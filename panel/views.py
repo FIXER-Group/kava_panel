@@ -2,6 +2,8 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import SetPasswordForm
+from django.contrib.sessions.models import Session
+from django.contrib.auth.models import User
 from django.views.decorators.cache import cache_page 
 from django.utils.decorators import method_decorator   
 from django.shortcuts import render, redirect
@@ -36,12 +38,18 @@ def logout_view(request):
 def edit_profile(request):
     token, created = Token.objects.get_or_create(user=request.user)
     if request.method == "POST":
-        form = SetPasswordForm(user=request.user, data=request.POST)
-        if form.is_valid():
-            form.save()
-            update_session_auth_hash(request, form.user)
-            messages.info(request, 'password_changed', extra_tags='password_changed')
-            return redirect('panel:edit_profile')
+        if request.POST.get('change-pass') == "True":
+            form = SetPasswordForm(user=request.user, data=request.POST)
+            if form.is_valid():
+                form.save()
+                update_session_auth_hash(request, form.user)
+                messages.info(request, 'password_changed', extra_tags='password_changed')
+                return redirect('panel:edit_profile')
+        elif request.POST.get('force-logout') == "True":
+            user = User.objects.get(username=request.user)
+            [s.delete() for s in Session.objects.all() if str(s.get_decoded().get('_auth_user_id')) == str(user.id)]
+            messages.info(request, 'Logout_message', extra_tags='logout')
+            return redirect('accounts:index')
     else:
         form = SetPasswordForm(user=request.user)
     return render(request, 'edit_profile.html', {'form' : form, 'token': token.key})
@@ -102,6 +110,8 @@ def webs_edit(request):
             except:
                 messages.info(request, 'error_killed', extra_tags='web_error')
         return render(request, 'edit_webs.html', Webs.get_edit_vaule(request.POST.get('path')))
+    else:
+        return render(request, 'edit_webs_error.html')
 
 @login_required(login_url='/')
 def system(request):

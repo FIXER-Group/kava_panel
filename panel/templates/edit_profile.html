@@ -19,6 +19,7 @@
                             {{f.label_tag}} <br> {{f}} <br>
                             </div>
                             {% endfor %}
+                            <input name="change-pass" type="hidden" value="True">
                             <div class="form-group">
                             <button  class="btn btn-success" type="submit">Save changes</button>
                             </div>
@@ -27,11 +28,16 @@
                 </div>
                 <div class="card">
                     <div class="card-header">
-                        <div class="card-title">Two-factor authentication</div>
+                        <div class="card-title">Force logout</div>
                     </div>
                     <div class="card-body">
                         <div class="form-group">
-                            <button class="btn btn-success">Submit</button>
+                            <p class="mb-4">"Force logout" logout you of all devices on which you were logged in.</p>
+                            <form method="post">
+                                {% csrf_token %}
+                            <input name="force-logout" type="hidden" value="True">
+                            <button type="submit" class="btn btn-danger">Force logout</button>
+                            </form>
                         </div>
                     </div>
                 </div>
