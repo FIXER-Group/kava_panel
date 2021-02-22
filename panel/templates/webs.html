@@ -28,7 +28,7 @@
                                         <td>{% if value == True %}<span class="text-success">Active</span>{% else %}<span class="text-danger">Disable</span>{% endif %}</td>
                                     {% elif forloop.last %}
                                         <td class="text-center">
-                                            <form method="POST" action="{% url 'panel:webs' %}">
+                                            <form class="d-inline" method="POST" action="{% url 'panel:webs' %}">
                                                 {% csrf_token %}
                                             {%if dict|get_item:"exist" == True%}
                                             <input name="active" type="hidden" value="true">
@@ -37,8 +37,13 @@
                                             {% else %}
                                             <input name="active" type="hidden" value="false">
                                             <input name="path" type="hidden" value="{{ value }}">
-                                            <button type="submit" class="btn btn-success btn-xs-block">Enable</button>{% endif %} <button type="button" class="btn btn-success btn-xs-block"><i class="las la-edit"></i> Edit</button> <button type="button" class="btn btn-danger btn-xs-block" data-toggle="modal" data-path="{{ dict|get_item:"path_on" }}" data-path-d="{{ dict|get_item:"path" }}" data-name="{{ dict|get_item:"domian" }}" data-target="#confirm-delete"><i class="las la-times"></i> Delete</button>
+                                            <button type="submit" class="btn btn-success btn-xs-block">Enable</button>{% endif %}</form> 
+                                            <form class="d-inline" method="POST" action="{% url 'panel:webs_edit' %}">
+                                              {% csrf_token %}
+                                            <input name="path" type="hidden" value="{{ value }}">
+                                            <button type="submit" class="btn btn-success btn-xs-block"><i class="las la-edit"></i> Edit</button> 
                                             </form>
+                                            <button type="button" class="btn btn-danger btn-xs-block" data-toggle="modal" data-path="{{ dict|get_item:"path_on" }}" data-path-d="{{ dict|get_item:"path" }}" data-name="{{ dict|get_item:"domian" }}" data-target="#confirm-delete"><i class="las la-times"></i> Delete</button>
                                         </td>    
                                     {% else %}
                                         <td>{{ value }}</td>

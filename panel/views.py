@@ -6,7 +6,7 @@ from django.views.decorators.cache import cache_page
 from django.utils.decorators import method_decorator   
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
-from .models import Server_stat, CPULogs, RAMLogs,Server_processes,Server_connections,Server_connection_speed, Webs,Users
+from .models import Server_stat, CPULogs, RAMLogs,Server_processes,Server_connections,Server_connection_speed,Webs,Users
 from django.contrib import messages
 from chartjs.views.lines import BaseLineChartView
 import socket
@@ -88,7 +88,20 @@ def webs(request):
                     messages.info(request, 'Site was enabled successfully', extra_tags='webs_info')
                 except:
                     messages.info(request, 'error_killed', extra_tags='web_error')
-    return render(request, 'webs.html', {'List_webs': Webs.ngnix_reader()})
+    return render(request, 'webs.html', {'List_webs': Webs.nginx_reader()})
+
+@login_required(login_url='/')
+def webs_edit(request):
+    if request.method == "POST":
+        if request.POST.get('save-website') == "true":
+            try:
+                Webs.set_edit_value(request.POST.get('path'),{'server_name': request.POST.get('server_name'),
+                                                              'root': request.POST.get('root'),
+                                                              'port': request.POST.get('port') })
+                messages.info(request, 'Site was updated successfully', extra_tags='webs_info')
+            except:
+                messages.info(request, 'error_killed', extra_tags='web_error')
+        return render(request, 'edit_webs.html', Webs.get_edit_vaule(request.POST.get('path')))
 
 @login_required(login_url='/')
 def system(request):

@@ -20,7 +20,7 @@ class Webs(models.Model):
     path = '/etc/nginx/sites-available' 
     path_av = '/etc/nginx/sites-enabled'
 
-    def ngnix_reader():
+    def nginx_reader():
         webs_list = list()
         for filepath in glob.glob(os.path.join(Webs.path, '*')):
             with open(filepath) as f:
@@ -38,13 +38,13 @@ class Webs(models.Model):
                     if 'root' in line:
                         cur_path = line.split('root ',1)[1][:-1]
                     if domians != "" and cur_path != "":
-                        ngnixDict = {
+                        nginxDict = {
                             "domian": domians,
                             "path": cur_path,
                             "exist": exist_status,
                             "path_on": str(filepath)
                             }
-                        webs_list.append(ngnixDict)
+                        webs_list.append(nginxDict)
                         break
         return webs_list
     
@@ -75,7 +75,43 @@ class Webs(models.Model):
         config_file.close()
         os.system("sudo mkdir /var/www/" + domian)
         os.system("sudo mkdir /var/www/" + domian + "/html")
-        
+
+    def get_edit_vaule(path_f):
+        web_value = dict()
+        web_value['path'] = path_f
+        web_value['name'] = path_f.replace(Webs.path, "")
+        f = open(path_f)
+        content = f.read()
+        for line in content.splitlines():
+            if 'server_name' in line:
+                web_value['server_name'] = line.split('server_name ',1)[1][:-1]
+            if 'root' in line and 'root' not in web_value:
+                web_value['root'] = line.split('root ',1)[1][:-1]
+            if 'listen' in line and 'port' not in web_value:
+                web_value['port'] = line.split('listen ',1)[1][:-1]
+            if 'listen 443' in line:
+                web_value['port_ssl'] = "443"
+        return web_value
+    
+    def set_edit_value(path_f,config_dict):
+        config_file = open(path_f)
+        strings_list = config_file.readlines()
+        for i in range(len(strings_list)):
+            if 'server_name' in str(strings_list[i]) and 'server_name' in config_dict:
+                strings_list[i] = "\tserver_name " + config_dict['server_name'] +";\n"
+                del config_dict['server_name']
+            if 'root' in str(strings_list[i]) and 'root' in config_dict:
+                strings_list[i] = "\troot " + config_dict['root'] +";\n"
+                del config_dict['root']
+            if 'listen' in str(strings_list[i]) and 'port' in config_dict:
+                strings_list[i] = "\tlisten " + config_dict['port'] +";\n"
+                del config_dict['port']
+        config_file = open(path_f, "w")
+        config_file.write("".join(strings_list))
+        config_file.close()
+        os.system("sudo systemctl restart nginx")
+            
+
 class Users(models.Model):
     def list_of_all_users():
         users = pwd.getpwall()

@@ -1917,6 +1917,7 @@ label {
 .toggle {
   position: relative;
   overflow: hidden;
+  display:block;
 }
 
 .toggle-group, .toggle-off, .toggle-on {
@@ -5488,6 +5489,17 @@ input[type=password] {
   outline: none !important;
 }
 input[type=text] {
+  background-color: #0e1015;
+  border: none;
+  color: #adadad;
+  padding: 15px 32px;
+  width:100%;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  outline: none !important;
+}
+input[type=number] {
   background-color: #0e1015;
   border: none;
   color: #adadad;

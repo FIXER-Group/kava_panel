@@ -13,7 +13,7 @@ def count_connections():
 
 @register.simple_tag
 def counts_webs():
-    return len(Webs.ngnix_reader())
+    return len(Webs.nginx_reader())
 
 @register.filter 
 def get_item(dictionary, key): return dictionary.get(key)

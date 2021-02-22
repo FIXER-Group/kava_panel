@@ -1,0 +1,126 @@
+{% extends "index.html" %}
+{% block title %}
+    Edit website: {{ name }}
+{% endblock %}
+{% block content %}
+<div class="content">
+    <div class="container-fluid">
+        <form class="d-inline" method="POST" action="{% url 'panel:webs_edit' %}">
+            {% csrf_token %}
+        <h4 class="page-title">Edit website: {{ name }} <button type="submit" class="btn btn-success pull-right" data-toggle="modal" data-target="#add-website">Save website</button></h4>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="server_name">Server Name</label>
+                            <input class="form-control" type="text" name="server_name" id="server_name" value="{{ server_name }}">
+                            <input name="path" type="hidden" value="{{ path }}"> 
+                            <input name="save-website" type="hidden" value="true">  
+                        </div> 
+                        <div class="form-group">
+                            <label for="root">Root</label>
+                            <input class="form-control" type="text" name="root" id="root" value="{{ root }}">
+                        </div> 
+                        <div class="form-group">
+                            <label for="root">Port</label>
+                            <input class="form-control" type="number" name="port" id="port" value="{{ port }}">
+                        </div> 
+                        <div class="form-group">
+                            <label for="ssl">SSL</label>
+                            <input type="checkbox" id="ssl" {% if port_ssl == "443" %}checked{% endif %} data-toggle="toggle" data-on="On" data-off="Off" data-onstyle="success" data-offstyle="danger">
+                        </div> 
+                        <div id="ssl_select">
+                        <div class="form-group">
+                            <label for="ssl">Type</label>
+                            <input type="checkbox" id="ssl_type" data-toggle="toggle" data-on="Own" data-off="Let's Encrypt" data-onstyle="success" data-offstyle="info">
+                        </div> 
+                        <div id="lets_encrypt_option" class="form-group p-5">
+                            <label for="ssl"><h5>Enable Let's Encrypt</h5>Enabling the following option will generate a Let's Encrypt certificate and renew it automatically</label>
+                            <input type="checkbox" id="ssl" data-toggle="toggle" data-on="On" data-off="Off" data-onstyle="success" data-offstyle="danger">
+                        </div>
+                        <div id="own_option" class="form-group p-5">
+                            <label for="ssl"><h5>Work in progress</h5></label>
+                        </div>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+{% block javascript %}
+<script>
+$( document ).ready(function() {
+    if ( $('#ssl').is(':checked') ) {
+        $('#ssl_select').show();
+    }
+    else{
+        $('#ssl_select').hide(); 
+    }
+    if ( $('#ssl_type').is(':checked') ) {
+        $('#lets_encrypt_option').hide(); 
+        $('#own_option').show();
+    }
+    else{
+        $('#lets_encrypt_option').show();
+        $('#own_option').hide(); 
+    }
+});
+
+$("#ssl").change(function() {
+    if ( $('#ssl').is(':checked') ) {
+        $('#ssl_select').slideDown( 300 );
+    }
+    else{
+        $('#ssl_select').slideUp( 300 ); 
+    }
+});
+
+$("#ssl_type").change(function() {
+    if ( $('#ssl_type').is(':checked') ) {
+        $('#lets_encrypt_option').slideUp( 300 );
+        $('#own_option').slideDown( 300 );
+    }
+    else{
+        $('#lets_encrypt_option').slideDown( 300 );
+        $('#own_option').slideUp( 300 ); 
+    }
+});
+</script>
+{% for message in messages %}
+{% if 'webs_info' in message.tags %}
+<script>
+	$.notify({
+		icon: 'las la-check-circle',
+		message: '{{ message }} '
+	},{
+		type: 'success',
+		placement: {
+			from: "top",
+			align: "right"
+		},
+		time: 3000,
+	});
+</script>
+{% endif %}
+{% if 'web_error' in message.tags %}
+<script>
+	$.notify({
+		icon: 'las la-exclamation-triangle',
+		message: 'An error occurred'
+	},{
+		type: 'danger',
+		placement: {
+			from: "top",
+			align: "right"
+		},
+		time: 3000,
+	});
+</script>
+{% endif %}
+{% endfor %}
+{% endblock %}
