@@ -116,6 +116,20 @@ def system(request):
                   )
 @login_required(login_url='/')
 def users(request):
+    if request.method == "POST":
+        if request.POST.get('add-user') == "true":
+            print("TWORZE KONTO")
+            try:
+                Users.create_new_user(request.POST.get('user_name'),request.POST.get('password'))
+                messages.info(request, 'User created successfully', extra_tags='users_info')
+            except:
+                messages.info(request, 'Error has benn occured', extra_tags='users_info')
+        elif request.POST.get('del_user') == "True":
+            try:
+                Users.delete_user(request.POST.get('nazwaniewiemznajdz'))
+                messages.info(request, 'User deleted successfully', extra_tags='users_info')
+            except:
+                messages.info(request, 'error_killed', extra_tags='web_error')
     return render(request, 'users.html',{'List':Users.list_of_all_users()})
 
 @login_required(login_url='/')

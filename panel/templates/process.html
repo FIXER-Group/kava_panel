@@ -30,7 +30,7 @@
                                         <td>{{ value }}</td>
                                     {% endif %}
                                 {% endfor %}
-                                <td class="text-center"><button type="button" class="btn btn-danger btn-xs-block" data-toggle="modal" data-pid="{{ dict|get_item:"pid" }}" data-name="{{ dict|get_item:"name" }}" data-target="#confirm-kill"><i class="las la-times"></i> KILL</button></td>
+                                <td class="text-center"><button type="button" class="btn btn-danger btn-xs-block" data-toggle="modal" data-name="{{ dict|get_item:"name" }}" data-target="#confirm-kill"><i class="las la-times"></i> KILL</button></td>
                             </tr>
                         {% endfor %}
                         </tbody>
@@ -49,7 +49,7 @@
         </div>
         <div class="modal-body">
           <p>Are you sure you want to stop the process?</p>
-          <p class="name-process"></p>       
+          <p class="name-process"></p>
         </div>
         <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

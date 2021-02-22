@@ -131,6 +131,11 @@ class Users(models.Model):
             subprocess.run(['useradd', '-p', password, username])
         except:
             sys.exit(1)
+    def delete_user(username):
+        try:
+            subprocess.run(['userdel', username])
+        except:
+            sys.exit(1)
 
 
 class Server_stat(models.Model):

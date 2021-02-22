@@ -79,7 +79,7 @@
                     <a href="{% url 'panel:webs' %}">
                         <i class="la la-globe"></i>
                         <p>Webs</p>
-                        <span class="badge badge-count">{%counts_webs%}</span>
+                        <span class="badge badge-count">{% counts_webs %}</span>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -118,6 +118,7 @@
                     <a href="{% url 'panel:users' %}">
                         <i class="la la-users"></i>
                         <p>Users</p>
+                        <span class="badge badge-count">{% counts_users %}</span>
                     </a>
                 </li>
                 
