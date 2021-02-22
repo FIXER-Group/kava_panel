@@ -5425,6 +5425,36 @@ body {
 [type="radio"]:checked:focus + .form-radio-sign:before, [type="radio"]:not(:checked):focus + .form-radio-sign:before {
   border: 1px solid #ccc;
 }
+#message {
+  display:none;
+  position: relative;
+  padding: 20px;
+  margin-top: 10px;
+}
+
+#message p {
+  padding: 5px;
+  font-size: 16px;
+}
+
+.valid {
+  color: #5cb85c;
+}
+
+.valid:before {
+  position: relative;
+  left: -35px;
+  content: "\2714";
+}
+.invalid {
+  color: #d9534f;
+}
+
+.invalid:before {
+  position: relative;
+  left: -35px;
+  content: "\2716";
+}
 
 /* checked mark aspect changes */
 /* disabled radio */

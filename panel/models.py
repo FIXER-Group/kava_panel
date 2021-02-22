@@ -14,6 +14,8 @@ from asgiref.sync import sync_to_async
 import glob
 import os,sys
 import pwd
+import crypt
+
 
 
 class Webs(models.Model):
@@ -128,7 +130,8 @@ class Users(models.Model):
         return list_of_users
     def create_new_user(username,password,root_priv=False):
         try:
-            subprocess.run(['useradd', '-p', password, username])
+            encPass = crypt.crypt(password,"22")   
+            os.system("useradd -p "+encPass+ " -s "+ "/bin/bash "+ username)
             if root_priv is True:
                 os.system("usermod -aG sudo " + username)
         except:
