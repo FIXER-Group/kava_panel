@@ -118,13 +118,12 @@ def system(request):
 def users(request):
     if request.method == "POST":
         if request.POST.get('add-user') == "true":
-            print("TWORZE KONTO")
             try:
                 Users.create_new_user(request.POST.get('user_name'),request.POST.get('password'))
                 messages.info(request, 'User created successfully', extra_tags='users_info')
             except:
                 messages.info(request, 'Error has benn occured', extra_tags='users_error')
-        elif request.POST.get('del_user') == "True":
+        elif request.POST.get('del-user') == "True":
             try:
                 Users.delete_user(request.POST.get('name'))
                 messages.info(request, 'User deleted successfully', extra_tags='users_info')
