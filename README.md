@@ -7,6 +7,7 @@
 * [REST API](#REST-API)
 * [Technologies](#technologies-used-in-project)
 ## Requirements
+* Debian-based distributions
 * Python 3.7
 * Mongodb
 ## Setup
