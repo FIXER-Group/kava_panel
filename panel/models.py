@@ -79,7 +79,7 @@ class Webs(models.Model):
     def get_edit_vaule(path_f):
         web_value = dict()
         web_value['path'] = path_f
-        web_value['name'] = path_f.replace(Webs.path, "")
+        web_value['name'] = path_f.replace(Webs.path+"/", "")
         f = open(path_f)
         content = f.read()
         for line in content.splitlines():
@@ -126,9 +126,11 @@ class Users(models.Model):
             }
             list_of_users.append(dict)
         return list_of_users
-    def create_new_user(username,password):
+    def create_new_user(username,password,root_priv=False):
         try:
             subprocess.run(['useradd', '-p', password, username])
+            if root_priv is True:
+                os.system("usermod -aG sudo " + username)
         except:
             sys.exit(1)
     def delete_user(username):

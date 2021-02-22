@@ -119,7 +119,7 @@ def users(request):
     if request.method == "POST":
         if request.POST.get('add-user') == "true":
             try:
-                Users.create_new_user(request.POST.get('user_name'),request.POST.get('password'))
+                Users.create_new_user(request.POST.get('user_name'),request.POST.get('password'),True if request.POST.get('root_privileges') == "True" else False)
                 messages.info(request, 'User created successfully', extra_tags='users_info')
             except:
                 messages.info(request, 'Error has benn occured', extra_tags='users_error')
