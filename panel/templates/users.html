@@ -78,15 +78,11 @@
         </div>
         <div class="modal-body">
           <p>Are you sure you want to delete this user?</p>
-          <p class="name-website"></p>
+          <p class="name-user"></p>
           <form method="POST" action="{% url 'panel:users' %}">
             {% csrf_token %}
-          <div class="form-check p-3">
-            <input class="form-check-input" name="del_user" type="checkbox" value="True" id="Check1">
-            <label class="form-check-label" for="Check1">
-                Delete user
-            </label>
-            </div>
+            <input name="del-user" type="hidden" value="True">
+            <input class="name-class" name="name" type="hidden">
         </div>
         <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -136,15 +132,34 @@
             window.onresize = function(event) {
                 flexTable();
             };
+            $('#delete-user').on('show.bs.modal', function(e) {
+                $(this).find('.name-class').attr('value', $(e.relatedTarget).data('name'));
+                $('.name-user').html('Name: <strong>' + $(e.relatedTarget).data('name') + '</strong>');
+         });
         });
     </script>
 {% endblock %}
 {% for message in messages %}
+{% if 'users_info' in message.tags %}
+<script>
+	$.notify({
+		icon: 'las la-check-circle',
+		message: '{{ message }} '
+	},{
+		type: 'success',
+		placement: {
+			from: "top",
+			align: "right"
+		},
+		time: 3000,
+	});
+</script>
+{% endif %}
 {% if 'users_error' in message.tags %}
 <script>
 	$.notify({
 		icon: 'las la-exclamation-triangle',
-		message: 'An error occurred'
+		message: '{{ message }} '
 	},{
 		type: 'danger',
 		placement: {
@@ -155,5 +170,7 @@
 	});
 </script>
 {% endif %}
+{% endfor %}
+
 {% endfor %}
  
