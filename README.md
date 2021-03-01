@@ -1,5 +1,5 @@
 # kava_panel
-![alt text](https://i.imgur.com/Q3ckJlJ.png)
+![alt text](https://i.imgur.com/qHatxce.png)
 
 ## Table of contents
 * [Requirements](#requirements)
